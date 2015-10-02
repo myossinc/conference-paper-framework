@@ -49,7 +49,7 @@ public class Pdfbox {
 		}
 	}
 
-	private void createContentFile(String content) {
+	public void createContentFile(String content) {
 		PrintWriter writer;
 		try {
 			writer = new PrintWriter("results/Result_Pdfbox.txt", "UTF-8");
@@ -58,13 +58,6 @@ public class Pdfbox {
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public PDRectangle getFieldArea(PDField field) {
-		COSDictionary fieldDict = field.getDictionary();
-		COSArray fieldAreaArray = (COSArray) fieldDict.getDictionaryObject(COSName.RECT);
-		PDRectangle result = new PDRectangle(fieldAreaArray);
-		return result;
 	}
 
 	public ArrayList findPositions(String pdfFile, int pageNum, final String key) throws IOException {

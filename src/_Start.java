@@ -37,12 +37,25 @@ public class _Start {
 		Pdfbox box = new Pdfbox();
 		ArrayList<TextPosition> list;		
 		try {
-			list = box.findPositions(FILE_1, 0, SEARCH_THIS_TERM);
-			System.out.println("Coordinates:\tx = " + list.get(0).getX() + ", y = " + list.get(0).getY());
+			list = box.findPositions(FILE_1, 0, SEARCH_THIS_TERM);			
+			box.createContentFile(createPdfboxContentString(list));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
+	}
+	
+	private static String createPdfboxContentString(ArrayList<TextPosition> list) {
+		ArrayList<String> content = new ArrayList<String>();
+		content.add("Position of '" + SEARCH_THIS_TERM +"' in " + FILE_1 + ":\n");
+		content.add("x = " + list.get(0).getX() +  ", y = " + list.get(0).getY());
+		String result = "";
+		
+		for (int i = 0; i < content.size(); i++) {
+			result += content.get(i);
+		}
+		
+		return result;
 	}
 
 }
