@@ -35,27 +35,41 @@ public class _Start {
 	// Find x- and y-coordinates of a term in the pdf file
 	private static void mineDataFromPdf() {
 		Pdfbox box = new Pdfbox();
-		ArrayList<TextPosition> list;		
+		ArrayList<TextPosition> list_file1, list_file2;
 		try {
-			list = box.findPositions(FILE_1, 0, SEARCH_THIS_TERM);			
-			box.createContentFile(createPdfboxContentString(list));
+			list_file1 = box.findPositions(FILE_1, 0, SEARCH_THIS_TERM);
+			list_file2 = box.findPositions(FILE_2, 0, SEARCH_THIS_TERM);
+			box.createContentFile(createPdfboxContentString(list_file1, list_file2));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
-	
-	private static String createPdfboxContentString(ArrayList<TextPosition> list) {
+
+	// Create a txt file that lists the results of the Pdfbox library (positions and difference of positions)
+	private static String createPdfboxContentString(ArrayList<TextPosition> list1, ArrayList<TextPosition> list2) {
 		ArrayList<String> content = new ArrayList<String>();
-		content.add("Position of '" + SEARCH_THIS_TERM +"' in " + FILE_1 + ":\n");
-		content.add("x = " + list.get(0).getX() +  ", y = " + list.get(0).getY());
+		float x1 = list1.get(0).getX(), x2 = list2.get(0).getX(), y1 = list1.get(0).getY(), y2 = list2.get(0).getY();
+
+		content.add("Position of '" + SEARCH_THIS_TERM + "' in " + FILE_1 + ":\n");
+		content.add("x = " + x1 + ", y = " + y1 + "\n\n");
+		content.add("Position of '" + SEARCH_THIS_TERM + "' in " + FILE_2 + ":\n");
+		content.add("x = " + x2 + ", y = " + y2 + "\n\n");
+		content.add("Position Differences:\n");
+		content.add("deltaX = " + diff(x1, x2) + ", deltaY = " + diff(y1, y2));
 		String result = "";
-		
+
 		for (int i = 0; i < content.size(); i++) {
 			result += content.get(i);
 		}
-		
+
 		return result;
+	}
+
+	// Return the distance of two float values
+	private static float diff(float x, float y) {
+		float result = x - y;
+		return result >= 0 ? result : result * (-1);
 	}
 
 }

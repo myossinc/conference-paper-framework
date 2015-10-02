@@ -1,2 +1,8 @@
 Position of 'First' in samples/LatexEA.pdf:
 x = 195.00494, y = 227.138
+
+Position of 'First' in samples/WordEA.pdf:
+x = 208.65019, y = 217.87
+
+Position Differences:
+deltaX = 13.645248, deltaY = 9.268005
