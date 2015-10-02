@@ -1,0 +1,740 @@
+\documentclass[11pt,a4paper,twoside]{article}
+
+% LaTeX-Umsetzung der "Richtlinien für Projekt- und Diplomarbeiten"
+% der LFE Medieninformatik, LMU München. (Autor: Richard Atterer, 27.9.2006, 23.10.2007), Bug-Fixing Mark Kaczkowski (23.6.2008)
+
+\usepackage[T1]{fontenc} % sonst geht \hyphenation nicht mit Umlauten
+\usepackage[latin1]{inputenc} % man kann schreiben äöüß, statt "a"o"u"s
+%\usepackage[utf8]{inputenc} % wie oben, aber UTF-8 als Encoding statt ISO-8859-1 (latin1)
+\usepackage[ngerman,english]{babel} % deutsche Trennregeln, "Inhaltsverzeichnis" etc.
+%\usepackage{ngerman} % Alternative zum Babel-Paket oben
+\usepackage{mathptmx} % Times-Roman-Schrift (auch für mathematische Formeln)
+
+% Zum Setzen von URLs
+\usepackage{color}
+\definecolor{darkred}{rgb}{.25,0,0}
+\definecolor{darkgreen}{rgb}{0,.2,0}
+\definecolor{darkmagenta}{rgb}{.2,0,.2}
+\definecolor{darkcyan}{rgb}{0,.15,.15}
+\usepackage[plainpages=false,bookmarks=true,bookmarksopen=true,colorlinks=true,
+  linkcolor=darkred,citecolor=darkgreen,filecolor=darkmagenta,
+  menucolor=darkred,urlcolor=darkcyan]{hyperref}
+
+% pdflatex: Bilder in den Formaten .jpeg, .png und .pdf
+% latex: Bilder im .eps-Format
+\usepackage{graphicx}
+\graphicspath{{img/}} 
+
+\usepackage{fancyhdr} % Positionierung der Seitenzahlen
+\fancyhead[LE,RO,LO,RE]{}
+\fancyfoot[CE,CO,RE,LO]{}
+\fancyfoot[LE,RO]{\Roman{page}}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{13.6pt} % behebt headheight Warning
+
+% Korrektes Format für Nummerierung von Abbildungen (figure) und
+% Tabellen (table): <Kapitelnummer>.<Abbildungsnummer>
+\makeatletter
+\@addtoreset{figure}{section}
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\@addtoreset{table}{section}
+\renewcommand{\thetable}{\thesection.\arabic{table}}
+\makeatother
+
+\sloppy % Damit LaTeX nicht so viel über "overfull hbox" u.Ä. meckert
+
+% Ränder
+\addtolength{\topmargin}{-16mm}
+\setlength{\oddsidemargin}{25mm}
+\setlength{\evensidemargin}{35mm}
+\addtolength{\oddsidemargin}{-1in}
+\addtolength{\evensidemargin}{-1in}
+\setlength{\textwidth}{15cm}
+\addtolength{\textheight}{34mm}
+%______________________________________________________________________
+
+\begin{document}
+
+\pagestyle{empty} % Vorerst keine Seitenzahlen
+\pagenumbering{alph} % Unsichtbare alphabetische Nummerierung
+
+\begin{center}
+\textsc{Ludwig-Maximilians-Universität München}\\
+Department ``Institut für Informatik''\\
+Lehr- und Forschungseinheit Medieninformatik\\
+Prof.\ Dr.\ Heinrich Hußmann
+
+\vspace{5cm}
+{\large\textbf{Projektarbeit}}\vspace{.5cm}
+
+{\LARGE Formatierung von wissenschaftlichen Publikationen mit CSS und JavaScript}\vspace{1cm}
+
+{\large Daniel Bertram}\\\href{mailto:daniel.bertram@stud.ifi.lmu.de}{daniel.bertram@stud.ifi.lmu.de}
+
+\end{center}
+\vfill
+
+\begin{tabular}{ll}
+Bearbeitungszeitraum: & 1. 2. 2009 bis 31. 7. 2009\\
+Betreuer: & Dipl.-Medieninf. Raphael Wimmer\\
+%Externer Betreuer: & Manfred Manager\\
+Verantw. Hochschullehrer: & Prof. Dr. Heinrich Hußmann
+\end{tabular}
+%______________________________________________________________________
+
+\cleardoublepage
+\section*{Zusammenfassung}
+
+Diese Arbeit untersucht inwiefern gängige Formatierungen wissenschaftlicher Publikationen mit XHTML, CSS und JavaScript umgesetzt werden können.
+Nach einer kurzen Übersicht über konventionelle Formate und einer Beschreibung der verwendeten Technologien werden die gängigen Formatierungen wissenschaftlicher Publikationen näher betrachtet. Anschließend wird untersucht in wie weit diese Anforderungen erfüllen lassen. Dabei wird sowohl auf den sich in Entwicklung befindenden Standard CSS 3 eingegangen als auch auf die mit aktuellen Browsern tatsächlich vorhandenen Möglichkeiten. 
+Abschließend folgt ein Fazit über den aktuellen Stand der Dinge sowie ein Ausblick auf zukünftige Möglichkeiten.
+
+\selectlanguage{english}
+\section*{Abstract}
+
+	
+This paper investigates how common formatting of scientific publications with XHTML, CSS and JavaScript can be implemented.
+After a brief overview of conventional formats and a description of the used technologies, common formatting of scientific publications are described in detail. Then it is examined how far these requirements can be met, considering both the upcoming standard CSS 3, as well as the existing possibilities with current browsers.
+Finally, a conclusion about the state of the art is given, combined with an outlook at future work.
+
+\selectlanguage{ngerman}
+\cleardoublepage
+\section*{Aufgabenstellung}
+
+Aktuelle wissenschaftliche Forschung wird oft als "`Paper"' auf eine Konferenz eingereicht. Je nach Konferenz gibt es unterschiedliche Anforderungen
+an das Layout des Papers. Bisher werden die meisten Paper entweder mit LaTeX oder MS-Word gesetzt. Diese Projektarbeit soll untersuchen inwiefern gängige Formatierungen mittels HTML, CSS und JavaScript umgesetzt werden können. Je nach Ausgabemedium (Druck, Screen, Beamer, PDA), sollen unterschiedliche Darstellungen des Papers ausgegeben werden. Dabei muss die Druckausgabe den offiziellen Layoutvorgaben entsprechen. Wichtige Features sind mehrspaltiges Layout, Bildunterschriften und automatisches Literaturverzeichnis. Da die Paper oft überarbeitet werden, soll auch grundlegende Unterstützung für Überarbeitung implementiert werden.
+
+\vfill % Sorgt dafür, dass das Folgende an das Seitenende rutscht
+
+\noindent Ich erkläre hiermit, dass ich die vorliegende Arbeit
+selbstständig angefertigt, alle Zitate als solche kenntlich gemacht
+sowie alle benutzten Quellen und Hilfsmittel angegeben habe.
+
+\bigskip\noindent München, \today
+
+\vspace{4ex}\noindent\makebox[7cm]{\dotfill}
+
+%______________________________________________________________________
+
+\cleardoublepage
+\pagestyle{fancy}
+\pagenumbering{roman} % Römische Seitenzahlen
+\setcounter{page}{1}
+
+% Inhaltsverzeichnis erzeugen
+\tableofcontents
+
+%Abbildungsverzeichnis erzeugen - normalerweise nicht nötig
+%\cleardoublepage
+%\listoffigures
+%______________________________________________________________________
+
+\cleardoublepage
+
+% Arabische Seitenzahlen
+\pagenumbering{arabic}
+\setcounter{page}{1}
+% Geändertes Format für Seitenränder, arabische Seitenzahlen
+\fancyhead[LE,RO]{\rightmark}
+\fancyhead[LO,RE]{\leftmark}
+\fancyfoot[LE,RO]{\thepage}
+
+\section{Einleitung} \label{chp:einleitung}
+Mit der fortschreitenden Entwicklung der zur Darstellung des World Wide Web verwendeten Technologien XHTML, CSS und JavaScript ist die Ausgabe nicht mehr auf konventionelle Monitore beschränkt. Alternative Ausgabegeräte wie Beamer oder mobile Geräte gewinnen zunehmend an Bedeutung. Zudem wird die Darstellung im Bereich der klassischen Ausgabegeräte, insbesondere im Druck, immer ausgereifter. Früher nur mit speziellen Textverarbeitungsprogrammen mögliche typografische Gestaltungsformen werden aufgrund weiterentwickelten Standards auf gängigen Browsern verfügbar.
+
+Aktuelle wissenschaftliche Forschung wird oft als "`Paper"' auf eine Konferenz eingereicht. Das Layout der "`Papers"' ist vorgegeben, die Veröffentlichung der "`Papers"' erfolgt konferenzbegleitend als Tagungsband ("`Proceedings"'). Ziel dieser Arbeit ist es, am Beispiel der "`Papers"' herauszufinden, wie weit diese Entwicklung tatsächlich fortgeschritten ist.
+
+Dazu wird erstens untersucht in wiefern die, auf den Medientyp angepasste, Ausgabe auf verschiedenen Medien möglich ist. Zweitens wird am Beispiel Druck untersucht wie genau vorgegebene Formatierungen umgesetzt werden können. Dabei wird sowohl betrachtet was laut Standard möglich seien sollte, als auch was mit den tatsächlich verfügbaren Browsern im Moment möglich ist.
+%______________________________________________________________________
+
+\cleardoublepage % Neue rechte Seite anfangen
+\section{Warum XHTML und CSS?} \label{chp:XHTML, CSS und JS im Vergleich}
+Im folgenden Abschnitt werden Gründe dargestellt die für eine Formatierung wissenschaftlicher Publikationen mit XHTML, CSS und JavaScript sprechen.
+Dazu werden zuerst herkömmliche Formate kurz dargestellt und das Prinzip von XHTML, CSS und JavaScript erklärt.
+Anschließend werden die Vorteile der Formatierung wissenschaftlicher Publikationen mit XHTML, CSS und JavaScript im Vergleich zu herkömmlichen Formaten erläutert.
+Abschließend wird als Beispiel für die Fähigkeiten von CSS 3 im Druckbereich das Buch \textit{Cascading Style Sheets: Designing for the Web} \cite{cssbook} beschrieben, welches nur mit XML und CSS erstellt wurde.
+
+\subsection{Konventionelle Formate}\label{chp:Konventionellen Formate}
+Als Grundlage dienen die Autorenrichtlinien für Konferenz- "`Paper"' der Konferenzen "`ACM Conference on Human Factors in Computing Systems"' (\textit{SIGCHI Conference Proceedings}, \textit{SIGCHI Extended Abstracts} \cite{chi}), "`IEEE Information Visualization Conference"' (\textit{InfoVis Research and Application Papers} \cite{InfoVis}) und "`Springer Lecture Notes in Computer Science"' (\textit{LNCS Proceedings} \cite{lncs}). Für alle vier Formate stehen sowohl \textit{LaTeX-} als auch \textit{MS Word-} Templates zur Verfügung, Abgabeformat ist das \textit{Portable Document Format} (PDF)\cite{pdf}, ein durch die ISO (ISO 32000) standardisiertes Austauschformat.
+
+Wissenschaftliche Publikationen werden als \textit{LaTeX-} oder \textit{MS Word-} Dateien gesetzt, aus diesen werden dann PDF-Dateien erzeugt. Das erzeugen von HTML-Dateien ist ebenfalls möglich, in \textit{MS Word} kann direkt in diesem Format gespeichert werden, für \textit{LaTeX} existieren dafür Konverter, beispielsweise Hevea \cite{hevea}. Eine Konvertierung von PDF- oder HTML-Dateien in das Erstellungsformat ist allerdings nicht möglich.
+
+Für das Öffnen von PDF-Dateien ist ein spezielles Programm nötig, beispielsweise der kostenlos erhältliche \textit{Adobe Reader} der Firma Adobe.
+
+\subsection{XHTML, CSS und JavaScript}\label{chp:XHTML, CSS und JavaScript}
+Die Extensible HyperText Markup Language \cite{XHTML11} ist in ihrer aktuellen Form XHTML 1.1 (W3C Recommendation seit 31 Mai 2001) eine auf XML basierende Auszeichnungssprache. Der Dokumenteninhalt wird mit Hilfe von Elementen zu einem Dokumentbaum strukturiert und erhält durch sie eine gewisse semantische Auszeichnung.
+
+XHTML ist modular aufgebaut \cite{XHTMLmodul} und kann bei Bedarf mit anderen Modulen oder XML basierenden Sprachen, wie zum Beispiel MathML \cite{mathml}, verknüpft werden. Je nach ausgewählten Modulen ergeben sich verschiedene XHTML Dokumenttypen \cite{XHTMLmedia}. Dadurch ist es möglich auch Elemente aus anderen Namensräumen, wie zum Beispiel mathematische Formeln, in XHTML Dokumenten zu verwenden.
+
+Für die Darstellung des Dokumenteninhaltes sind Cascading Style Sheets \cite{cssphd} zuständig, für die einzelnen Elemente können umfangreiche Angaben zur Darstellung gemacht werden. Ein oder mehrere Stylesheets können mit einem XHTML Dokument verknüpft werden, falls kein Stylesheet angegeben ist wird das Standard Stylesheet des Webbrowsers verwendet.
+
+CSS 2  \cite{css2} ist seit 1998 eine W3C Recommendation, die aktuelle Version 2.1 wurde zuletzt am 23.04.2009 aktualisiert. CSS 3 \cite{css3current} ist modular aufgebaut und bietet wesentlich mehr Möglichkeiten als sein Vorgänger, insbesondere im Druckbereich. Einige Module befinden sich seit 1999 in der Entwicklung, der Status der Module ist ziemlich verschieden. Der genaue Status und Start der Entwicklung der einzelnen Module ist in Tabelle \ref{tab:CSS3ModulStatus} dargestellt.
+
+\begin{table*}
+	\centering
+		\begin{tabular}{lcr}
+			Modulname: & in Entwicklung seit:	& Status:	\\
+			Media Queries	& 4 April 2001	&	Candidate Recommendation	\\
+			Selectors	&	10 April 2000	&	Last Call	\\
+			Generated and Replaced Content & 14 Mai 2003 & Working Draft	\\
+			Multi-column Layout & 22 Juni 1999 & Working Draft	\\
+			Paged Media	&	23 Juni 1999	& Working Draft	\\
+			Basic Box Model & 26 Juli 2001 &	Working Draft	\\
+			Fonts & 31 Juli 2001 &	Working Draft	\\
+			Generated Content for Paged Media	&	12 Juni 2006 & Working Draft	\\
+			Text &	17 Mai 2001 & Working Draft	\\
+			Lists & 20 Februar 2002	& Working Draft	\\
+			A MathML for CSS profile	& 27 April 2007	&	Working Draft	\\
+		\end{tabular}
+	\caption{CSS 3 Module Status Juli 2009. \cite{css3current}}
+	\label{tab:CSS3ModulStatus}
+\end{table*}
+
+Die im Web Browser ausgeführte Skriptsprache JavaScript \cite{ecma} (ECMA-262, 3. Edition Dezember 1999) ermöglicht der Zugriff auf die \textit{Document Object Model} genannte Schnittstelle von XHTML-Dokumenten. Mit ihr ist es möglich Inhalt, Struktur und Darstellung von XHTML-Dokumenten dynamisch zu ändern.
+
+Für die Anzeige von Webseiten existieren mehrere kostenlos erhältliche Webbrowser, für diese Arbeit wurden die aktuellsten Versionen ("`Nightly-Builds"') von \textit{Mozilla Firefox} 3.5 \cite{firefox}, \textit{Apple Safari} 4 \cite{safari}, \cite{webkit}, \textit{Google Chrome} 3 \cite{chrome} und \textit{Opera} 10 \cite{opera} betrachtet.
+
+\subsection{Vorteile gegenüber konventionellen Formaten}\label{chp:Vorteile gegenüber konventionellen Formaten}
+Wissenschaftliche Publikationen werden herkömmlicherweise als PDF-Dateien auf Webseiten veröffentlicht und können dort mit Hilfe eines speziellen Programmes, beispielsweise dem Adobe Reader, geöffnet werden. Alternativ können auch aus \textit{LaTeX-} oder \textit{MS Word-}Dateien HTML-Dateien erzeugt werden, deren Layout allerdings nur eingeschränkt angepaßt werden kann.
+
+Im Gegensatz dazu können mit XHTML und CSS erstellte und veröffentlichten "`Papers"' direkt im Webbrowser betrachtet werden, es erfolgt kein Medienbruch. Durch die Trennung von Inhalt und Darstellung ist die medienspezifisch angepaßte Ausgabe auf verschiedenen Medien möglich \cite{317681}, ohne dass dazu der Inhalt kopiert werden muss. Barrierefreie  Veröffentlichung \cite{wcag} ist ebenfalls möglich, der Nutzer kann Beispielsweise durch Nutzer-CSS die Darstellung an seine Bedürfnisse anpassen. Des weiteren existieren für den verbreiteten Standard XHTML auch spezielle Ausgabegeräte, wie zum Beispiel Screenreader. Dadurch dass Erstellungsformat und Veröffentlichungsformat identisch sind lassen sich mit XHTML und CSS veröffentlichte wissenschaftliche Publikationen leichter bearbeiten, da jederzeit auf das Erstellungsformat zugegriffen werden kann.
+
+Inhalte können semantisch Ausgezeichnet werden, beispielsweise mit Hilfe von \textit{Microformats} \cite{microformats} oder \textit{RDFa}-Tags \cite{rdfa}, dadurch ist eine einfache maschinelle Weiterverarbeitung der Daten, insbesondere durch Suchmaschinen, möglich. Auch die Ausgabe als PDF-Datei ist möglich, wodurch die Rückwärtskompatibilität bezüglich des Abgabeformates gegeben ist.
+
+\subsection{Buchdruck mit PrinceXML}\label{chp:Buchdruck mit PrinceXML}
+Um die Fähigkeiten von CSS 3 im Druckbereich zu verdeutlichen ist das Beispiel des Buches \textit{Cascading Style Sheets: Designing for the Web}, welches mit PrinceXML \cite{prince} erstellt wurde, gut geeignet.
+
+PrinceXML ist ein XML-Konverter, der sowohl XHTML als auch CSS 3 zum Großteil unterstützt und daraus PDF-Dateien erzeugt. 
+Hakon Wium Lie und Bert Bos haben das Buch \textit{Cascading Style Sheets: Designing for the Web} mit XHTML und CSS 3 erstellt und die zum Druck benötigte PDF-Datei mit PrinceXML erzeugt \cite{boom}.
+
+Neben den CSS 3 Eigenschaften, welche in Abschnitt \ref{chp:XHTML und CSS} näher beschrieben werden, machten sie  ausgiebig vom XHTML class-attribut Gebrauch. Mit dessen Hilfe erstellten sie ein eigenes Microformat für ihr Buch, \textit{boom!} genannt. Ein Microformat ist ein Format zur semantischen Auszeichnung von XHTML \cite{microformats}, damit konnten sie nicht in XHTML vorhandene aber für die Struktur eines Buches benötige Elemente auszeichnen.
+
+Das Beispiel zeigt, dass es möglich ist XHTML mit CSS 3 als Dokumentformat auch für den Druckbereich zu nutzen, zumindest mit Hilfe des Konverters PrinceXML. Es dient als Bestätigung für die Aufgabenstellung, wenn theoretisch die Erstellung eines ganzen Buches nur mit XHTML und CSS möglich ist, sollte auch die (nicht so umfangreiche) Formatierung von wissenschaftlichen Publikationen mit XHTML und CSS für verfügbaren Webbrowser möglich sein.
+
+%\_____________________________________________________________________
+
+\cleardoublepage % Neue rechte Seite anfangen
+\section{Gängige Formatierungen}\label{chp:Gaengige Formatierungen}
+Im folgenden werden gängige Formatierungen wissenschaftlicher Publikationen dargestellt und sich darauf ergebende Anforderungen abgeleitet. Als Grundlage dienen die in \ref{chp:Konventionellen Formate} erwähnten Autorenrichtlinien für Konferenz- "`Paper"'.
+
+\subsection{Aufbau, mehrspaltiges Layout}\label{chp:Aufbau, mehrspaltiges Layout}
+Der Aufbau der untersuchten "`Paper"' ist relativ ähnlich. Auf die Überschrift und Informationen zu den Autoren folgen die Zusammenfassung sowie Schlüsselwörter.
+Diese Bereiche sind bei den Formaten \textit{LNCS Proceedings} und \textit{InfoVis Research and Application Papers} im Vergleich zum folgenden Inhalt eingerückt. 
+
+Während bei \textit{LNCS Proceedings} der Inhalt einspaltig ist und direkt folgt, kann bei \textit{InfoVis Research and Application Papers} nach den Autoren optional ein sogenanntes "`Teaser Image"' folgen. Auf die Schlüsselwörter folgt eine "`Diamond Rule"' genannte Trennlinie, anschließend beginnt der zweispaltige Inhaltsteil. 
+
+Bei den Formaten \textit{SIGCHI Conference Proceedings} und \textit{SIGCHI Extended Abstracts} ist nur die Überschrift vorgestellt. Autoreninformationen, Zusammenfassung und Schlüsselwörter sind Bestandteil des zweispaltigen Layouts, wobei den Autoreninformationen bei \textit{SIGCHI Extended Abstracts} die gesamte erste Spalte gehört und sie bei \textit{SIGCHI Conference Proceedings} in einem eigenständigen zweispaltigen Absatz untergebracht sind. 
+
+Die Formate \textit{SIGCHI Conference Proceedings}, \textit{SIGCHI Extended Abstracts} und \textit{InfoVis Research and Application Papers} besitzen außerdem noch einen abgesetzten Absatz fester Größe am unteren Rand der ersten Spalte, welcher Informationen zum Urheberrecht enthält. Abbildung \ref{fig:templates} zeigt die erste Seite der vorgestellten Formate.
+
+\begin{figure}
+	\centering
+		\includegraphics{templates}
+	\caption{Paper Templates: \textit{InfoVis Research and Application Papers} (a) \cite{InfoVis}, \textit{SIGCHI Conference Proceedings} (b) \cite{chi},  \textit{LNCS Proceedings} (c) \cite{lncs}, \textit{SIGCHI Extended Abstracts} (d) \cite{chi}.}
+	\label{fig:templates}
+\end{figure}
+
+Als Anforderungen ergibt sich hieraus, dass ein mehrspaltiges Layout mit von der Größe der Seite und der vorgestellten Elemente abhängigen Spaltenhöhen nötig ist. Spaltenumbruch bei Seitenende sowie spaltenübergreifender Textfluss mit Textumbruch sind ebenso erforderlich. Beim Textumbruch ist es erforderlich, dass weder \textit{Schusterjungen} (Seitenumbruch nach der ersten Zeile eines Absatzes) noch \textit{Hurenkindern} (Seitenumbruch vor der letzten Zeile eines Absatzes) entstehen.
+
+\subsection{Überschriften und Absätze}\label{chp:Ueberschriften und Absaetze}
+Alle untersuchten "`Paper"' verwenden Überschriften verschiedener Gliederungstiefen sowie Absätze. Schriftart, Größe, Formatierung, Zeilenabstand und der Abstand zwischen den Absätzen und Überschriften ist bei den untersuchten "`Papers"' unterschiedlich. 
+
+Überschriften sind den Absätzen vorgestellt, bei \textit{LNCS Proceedings} teilweise auch als erstes Wort in den Textfluss des Absatzes integriert. Sie sind linksbündig ausgerichtet und bei \textit{InfoVis Research and Application Papers} und \textit{LNCS Proceedings} auch durchgehend nummeriert.
+
+Absätze sind im Blocksatz, nur bei \textit{SIGCHI Extended Abstracts} ist der Text linksbündig ausgerichtet. Bei \textit{InfoVis Research and Application Papers} und \textit{LNCS Proceedings} sind die Absätze, bis auf den direkt auf eine Überschrift folgenden Absatz, eingerückt. 
+
+Textformatierung beschränkt sich auf die gängigen Auszeichnungsarten Fett, Kursiv, dicktengleiche Schrift und Kapitälchen.
+
+Daraus ergibt sich dass verschiedene Schriftarten, Größen, Ausrichtungen, Formatierungen und Abstände individuell für jedes Element möglich sein müssen, ebenso wie die Nummerierung der Überschriften.
+
+\subsection{Bilder}\label{chp:Bilder}
+Bei allen untersuchten Formaten ist das Einfügen von Bildern möglich. Bei \textit{LNCS Proceedings} und \textit{SIGCHI Extended Abstracts} werden diese im Textfluss dargestellt, bei \textit{InfoVis Research and Application Papers} und \textit{SIGCHI Conference Proceedings} müssen sie am Anfang oder Ende einer Spalte angebracht werden. 
+
+Bei \textit{InfoVis Research and Application Papers} darf der Zusammenfassung ein "`Teaser Image"' vorgestellt werden, welches nicht wie die anderen Bilder angeordnet wird. Bei \textit{SIGCHI Extended Abstracts} ist außerdem das Einfügen eines ganzseitigen Bildes möglich, ebenso das Einfügen eines Bildes in den linken Seitenrand. Beim Spalten- und Textumbruch wird diese Bilderseite übersprungen, der Textfluss geht auf der nächsten Seite weiter.
+
+Bei allen Formaten besitzen die Bilder Unterschriften welche durchgängig nummeriert und zusammen mit den Bildern angeordnet werden müssen.
+Daher ist eine Bildanordnung und Nummerierung nötig, die je nach Format, Position oder Typ die Bilder entsprechend den Vorgaben anordnet.
+
+\subsection{Mathematische Formeln}\label{chp:Mathematische Formeln}
+Mathematische Formeln sind ebenfalls Bestandteil wissenschaftlicher Publikationen. Wie bei Bildern auch müssen sie je nach Format im Textfluss oder am Anfang beziehungsweise Ende einer Spalte angeordnet werden. Neben der Anordnung ist auch eine Nummerierung nötig.
+
+\subsection{Quelltext}\label{chp:Quelltext}
+Vorgaben zur Darstellung von Quelltext werden nur bei dem Format \textit{LNCS Proceedings} gemacht. Dort werden Absätze mit Quelltext wie normaler Text angeordnet und umgebrochen. Der Quelltext muss linksbündig ausgerichtet sein und eine dicktengleiche Schriftart verwenden. Textzeilen müssen nach Bedarf eingerückt werden können.
+
+\subsection{Tabellen}\label{chp:Tabellen}
+Auch Tabellen sind ein fester Bestandteil wissenschaftlicher Publikationen. Genau wie  Bilder müssen sie bei \textit{LNCS Proceedings} und \textit{SIGCHI Extended Abstracts} im Textfluss dargestellt werden, bei \textit{InfoVis Research and Application Papers} und \textit{SIGCHI Conference Proceedings} müssen sie am Anfang oder Ende einer Spalte angebracht werden.
+
+Tabellen besitzen Überschriften welche durchgängig nummeriert und automatisch zusammen mit den Tabellen angeordnet werden müssen. Bei \textit{InfoVis Research and Application Papers} und \textit{LNCS Proceedings} werden sie den Tabellen vorgestellt, bei den anderen Formaten werden sie wie Bildunterschriften angeordnet.
+
+Dicke und Darstellung der Ränder sowie Innenabstände der Tabellen sind auch, je nach Format, unterschiedlich.
+Daher ist eine formatspezifische Tabellenformatierung, Anordnung und Nummerierung nötig.
+
+\subsection{Listen}\label{chp:Listen}
+Listen werden bei allen Formaten wie normaler Text im Textfluss angeordnet und umgebrochen. Es kommen neben Nummerierungen auch verschiedene Aufzählungszeichen bei der Formatierung zum Einsatz.
+Deshalb müssen Listenformatierungen individuell vorgegeben werden können.
+
+\subsection{Fußnoten}\label{chp:Fussnoten}
+Fußnoten sind in jedem der Formate möglich. Sie werden am Ende der betreffenden Spalte angebracht und mit hochgestellten Zahlen durchnummeriert. 
+Ihnen vorgestellt ist eine Trennlinie die je nach Format in Länge, Dicke, Abstand und Anordnung variiert. 
+Anordnung, Einfügen der Trennlinie und Nummerierung der Fußnoten muss je nach "`Paper"'-Typ unterschiedlich erfolgen können.
+
+\subsection{Papierformate und Seitenränder}\label{chp:Papierformate und Seitenraender}
+Jede der Formatvorlagen besitzt einen Inhaltsbereich mit fester Größe, ein vorgegebenes Papierformat sowie feste Seitenränder. Diese sind entweder direkt angegeben oder lassen sich aus den anderen Größen errechnen.
+Die Ausrichtung des "`Paper"'-Types \textit{SIGCHI Extended Abstracts} ist Querformat, bei den anderen drei Typen Längsformat.
+
+Größenangaben sind in Zentimetern und Inch, wobei teilweise nur ein Wert der passende Ausgangswert ist und der andere nur eine ungenau gerundete Umrechnung. Bei dem Format \textit{SIGCHI Conference Proceedings} beispielsweise sind alle Zentimeter angaben gerundet, was zu erheblichen Abweichungen führt.
+Das Papierformat ist bei \textit{LNCS Proceedings} "`Din A4"' (210 mm x 297 mm), bei den anderen Formaten das amerikanische "`Letter"' Format (216 mm x 279 mm).
+Insbesondere der Breitenunterschied kann in Verbindung mit festen Seitenrändern beim Ausdruck im jeweils anderen Format zu unschönen Skalierungen führen. 
+Daher ist neben der Festlegung der Ausrichtung und der Einstellung der verschiedenen Bereichsgrößen eine an das jeweilige Format angepasste Randgröße erforderlich.
+
+\subsection{Literaturverzeichnis}\label{chp:Literaturverzeichnis}
+Als Format für Literaturverzeichnisse wird bei allen "`Paper"'-Typen \textit{BibTeX} \cite{bibtex} verwendet. \textit{BibTeX} ist ein von Oren Patashnik entwickeltes Programm zur Erstellung von Literaturverzeichnissen in \textit{LaTeX}. 
+Es verknüpft im Text vorkommende Zitatverweise mit einer Literaturdatei und erstellt daraus ein Literaturverzeichnis. Einen Ausschnitt aus einer Literaturdatei sehen Sie in Abbildung \ref{fig:bib}.
+
+\begin{figure}[!h]
+	\centering
+		\includegraphics[height=4cm]{bib}
+	\caption{Ausschnitt einer Literaturdatei}
+	\label{fig:bib}
+\end{figure}
+
+Daher ist für die Formatierung wissenschaftlicher Publikationen ein \textit{BibTeX} Parser erforderlich der Literaturdateien einlesen kann. Diese Einträge müssen dann formatiert und entsprechend ihrer Verwendung im Text sortiert werden.
+
+\subsection{Ausgabe auf verschiedenen Medien}\label{chp:Ausgabe auf verschiedenen Medien}
+Da wissenschaftliche Publikationen primär als "`Paper"' veröffentlicht werden, beziehen sich die in diesem Abschnitt betrachteten Formatvorlagen nur auf das Medium Papier.
+Für die anderen Medien existieren keine Vorgaben, spezifische Formatierungen für andere Medien sind auch nicht Teil dieser Arbeit.
+Lediglich die Möglichkeit medienspezifischer Formatierungsangaben ist erforderlich.
+
+\subsection{Zusammenfassung der Anforderungen}\label{chp:Zusammenfassung der Anforderungen}
+Zusammenfassend ergeben sich für die Formatierung wissenschaftlicher Publikationen folgende Anforderungen, welche mit Hilfe von XHTML, CSS und JavaScript erfüllt werden müssen:
+\begin{enumerate}
+	\item Unterstützung verschiedene Formatierungen auch für Elemente des gleichen Typs.
+	\item Aufteilung der Elemente in ein mehrspaltiges Layout mit spaltenübergreifenden Textfluss.
+	\item automatische Nummerierung von Elementen.
+	\item automatische Anordnung von Elementen.
+	\item Darstellung mathematischer Formeln.	
+	\item verschiedene Papierformate und Ausrichtungen.
+	\item Verarbeitung von Literaturdateien, Erstellung eines Literaturverzeichnisses.
+	\item verschiedene Formatierungen für verschiedene Medien.
+\end{enumerate}
+
+%\_____________________________________________________________________
+
+\cleardoublepage % Neue rechte Seite anfangen
+\section{Formatierung mit XHTML und CSS}\label{chp:XHTML und CSS}
+Im folgenden werden die für die Formatierung von wissenschaftlichen Publikationen wichtigen Bestandteile von XHTML und CSS dargestellt.
+
+Zuerst werden die für die in Abschnitt \ref{chp:Gaengige Formatierungen} ermittelten Anforderungen relevanten XHTML-Elemente kurz erläutert, anschließend werden die vielfältigen Möglichkeiten der Darstellung mit CSS betrachtet.
+
+Abschließend folgt eine Zusammenfassung in der auf die Möglichkeiten und Limitierungen, insbesondere in zur Zeit verfügbaren Webbrowsern, eingegangen wird.
+
+\subsection{Textstrukturierung mit XHTML}\label{chp:Textstrukturierung mit XHTML}
+XHTML \cite{XHTML1} bietet zur Auszeichnung von Dokumenten verschiedene Elemente, die für wissenschaftliche Publikationen wichtigsten werden im folgenden kurz dargestellt.
+
+Die meisten Elemente umschließen den Inhalt in der Form \textit{<tag>Inhalt</tag>}, alleinstehende Elemente werden in der Form \textit{<tag/>} geschrieben.
+
+Zur Auszeichnung von Überschriften verschiedener Ordnung existieren die Elemente \textit{<h1>} bis \textit{<h6>}, Absätze werden mit \textit{<p>} ausgezeichnet. 
+
+Bei Listen wird zwischen \textit{<ol>} für geordnete und \textit{<ul>} für ungeordnete Listen unterschieden. Die einzelnen Listeneinträge werden mit \textit{<li>} abgegrenzt.
+
+Tabellen werden mit \textit{<table>} ausgezeichnet, sie können desweiteren in einen Kopf (\textit{<thead>}), Rumpf (\textit{<tbody>}) und Fußbereich (\textit{<tfoot>}) unterteilt werden. Einzelne Tabellenzeilen werden mit \textit{<tr>} ausgezeichnet, diese enthalten die Tabellenzellen. Kopfzellen können mit \textit{<th>} ausgezeichnet werden, normale Datenzellen mit \textit{<td>}. Für Tabellenüberschriften gibt es das \textit{<caption>} Element.
+
+Quelltext wird mit dem \textit{<code>} Element ausgezeichnet, Zitate mit \textit{<blockquote>} und Literaturverweise mit \textit{<cite>}.
+
+\textit{<div>} Elemente dienen der Gruppierung beliebiger Elemente, \textit{<img>} Elemente zum Einbinden von Bildern und \textit{<object>} Elemente zum Einbinden von Objekten verschiedener Art.
+
+Für die Überarbeitung von XHTML Dokumenten gibt es das Element \textit{<del>} zur Markierung gelöschten Textes und \textit{<ins>} zur Auszeichnung von nachträglich eingefügtem Text.
+
+Des Weiteren gibt es noch Elemente zur Formatierung, welche Funktionen herkömmlicher Textverarbeitungsprogramme bereitstellen. Dazu zählen unter anderem kursiv (\textit{<i>}), fett (\textit{<b>}), dicktengleich (\textit{<tt>}), hochgestellt (\textit{<sup>}) und tiefgestellt (\textit{<sub>}). 
+
+Zeilenumbrüche können mit \textit{<br/>} erzwungen werden, Trennlinien werden mit \textit{<hr/>} erzeugt.
+
+Bei Bedarf kann einem Element auch eine Klasse oder Identität zugewiesen werden.
+
+\subsection{XHTML Umsetzung}\label{chp:XHTML Umsetzung}
+Neben den im vorherigen Abschnitt (\ref{chp:Textstrukturierung mit XHTML}) beschriebenen XHTML Elementen werden zur Formatierung wissenschaftliche Publikationen weitere Elemente benötigt.
+
+Daher werden mit Hilfe des class-attributes eigene Elemente für wissenschaftliche Publikationen erstellt, unter anderem für Informationen zu den Autoren, die Zusammenfassung und Schlüsselwörter. Die Elemente sind in Tabelle \ref{tab:micro} aufgeführt.
+
+\begin{table*}
+	\centering
+		\begin{tabular}{lcr}
+			Klassenname: & Verfügbar für:	& Erklärung:	\\			
+			abstract	& Absätze und Überschriften	&	Zusammenfassung	\\
+			keywords	&	Absätze und Überschriften	&	Schlüsselwörter	\\
+			acmkeywords & Absätze und Überschriften & ACM Schlüsselwörter	\\
+			author	& Absätze	&	Informationen zu den Autoren	\\
+			figCaption & \textit{<div>} Elemente & Bildunterschrift	\\
+			mathCaption	&	\textit{<div>} Elemente	& Formelunterschrift	\\
+			footnote & \textit{<div>} Elemente &	Fußnote	\\
+			copyrightbox & \textit{<div>} Elemente &	Copyright Box	\\
+		\end{tabular}
+	\caption{Elemente für wissenschaftliche Publikationen.}
+	\label{tab:micro}
+\end{table*}
+
+Einen Ausschnitt der XHTML Seite des Templates des Formates \textit{InfoVis Research and Application Papers} sehen Sie in Abbildung \ref{fig:InfoVisHTML}
+
+\begin{figure}
+	\centering
+		\includegraphics[height=16cm]{InfoVisHTML}
+	\caption{Ausschnitt einer XHTML Seite des Formates \textit{InfoVis Research and Application Papers}.}
+	\label{fig:InfoVisHTML}
+\end{figure}
+
+\subsection{Verbindung von Inhalt und Darstellung}\label{chp:Verbindung von Inhalt und Darstellung}
+XHTML-Elemente werden durch CSS mit Darstellungseigenschaften verknüpft, die Auswahl der Elemente erfolgt über Selektoren \cite{css3selectors}.
+
+Selektoren sind Muster die mit Elementen des Dokumentbaumes abgeglichen werden. Selektoren werden in einfache Selektoren und Kombinatoren unterteilt.
+
+Einfache Selektoren sind neben dem Universalselektor (\textit{*}), Typ- (zum Beispiel \textit{p}) und Attributsselektoren (zum Beispiel \textit{h1[title]}).
+
+Kombinatoren werden ihrerseits wieder in Nachfahren-, Kinder- und Geschwisterkombinatoren unterteilt. Nachfahrenkombinator ist das Leerzeichen, Beispielsweise passt \textit{h1 em} auf alle \textit{<em>} Elemente die Nachfahren von \textit{<h1>} Elementen sind. Kinderkombinator ist \textit{>}, Geschwisterkombinatoren sind \textit{\~} für Geschwister und \textit{+} für direkte Geschwister.
+
+Aus einfachen Selektoren können zusammen mit Kombinatoren Selektorenketten gebildet werden, wodurch sich vielfältige Auswahlmöglichkeiten ergeben. 
+
+Beispielsweise können mit \textit{h2 + p \{...\}} alle \textit{<p>} Elemente, die direkt auf eine Überschrift zweiter Ordnung folgen, ausgewählt und mit Darstellungseigenschaften versehen werden.
+
+Selektoren mit gleicher Deklaration können gruppiert werden. So ergibt zum Beispiel \textit{h1,h2\{font-family: "`Times New Roman"'\}} das gleiche wie \textit{h1 \{font-family: "`Times New Roman\} h2 \{font-family: "`Times New Roman\}}.
+
+Eine weitere Art von Selektoren in CSS sind Attributsselektoren. Diese gleichen nicht nur Elemente sondern auch ihre Attribute ab. Zum Beispiel passt \textit{div[class="'test"']} auf alle \textit{<div>} Elemente aus deren class-attribut den Wert "`test"' hat. 
+
+Für das oft verwendete class-attribut gibt es eine Kurzschreibweise bestehend aus einem Punkt und dem Klassennamen. Daher lässt sich das vorherige Beispiel auch als \textit{div.test} schreiben.
+
+CSS bietet auch die Möglichkeit Elemente nach ihrer Identität auszuwählen. Diese Selektoren werden mit dem Rautenzeichen gekennzeichnet. Beispielsweise wählt \textit{div\#test} das \textit{<div>} Element aus dessen Attribut \textit{id="'test"'} ist.
+
+Die letzte Art von Selektoren sind die sogenannten Pseudoklassen-Selektoren. Sie ermöglichen die Auswahl anhand von Informationen die über die Elemente des Dokumentbaumes hinausgeht. 
+
+Pseudoklassen werden als Doppelpunkt gefolgt vom Namen geschrieben. So kann beispielsweise mit \textit{p:first-of-type\{...\}} das \textit{<p>} Element ausgewählt werden welches das erste Kind seines Elternelementes vom Typ \textit{<p>} ist.
+
+CSS bietet auch die Möglichkeit auf Teile von Elementen zuzugreifen für die in XHTML keine Auszeichnung existiert, sowie auf automatisch erstellte Inhalte die nicht im Dokument enthalten sind. Dadurch ist eine sehr spezifische Auswahl möglich, beispielsweise kann mit \textit{p::first-letter} der erste Buchstabe eines Absatzes ausgewählt und besonders dargestellt werden.
+
+Ein Sonderfall sind die \textit{::before} und \textit{::after} Pseudoelemente, womit automatisch erzeugte Inhalte formatiert werden können. Auf automatisch erzeugte Inhalte wird in \ref{chp:Automatisch erzeugte und veraenderte Inhalte} noch näher eingegangen.
+
+Darstellungseigenschaften in CSS folgen auf Selektoren. Sie werden in geschweifte Klammern eingeschlossen, mit Strichpunkt getrennt und als Attribut-Wert Paare formuliert, wobei es auch einige Kurzschreibweisen gibt auf die hier nicht weiter eingegangen wird. 
+
+Ein einfaches Beispiel welches allen Textabsätzen die Schriftart "`Helvetica"' und den Schriftstill "`italic"' zuweist ist \textit{p \{font-family: "`Helvetica"';  font-style: "`italic"'\}}.
+
+
+\subsection{Elementanordnung}\label{chp:Elementanordnung}
+CSS stellt Dokumente als hierarchisch ineinander geschachtelten Boxen \cite{css3box} dar, siehe Abbildung \ref{fig:cssboxmodel01}.
+
+\begin{figure}
+	\centering
+		\includegraphics[height=8cm]{cssboxmodel01}
+	\caption{CSS Elementdarstellung durch Boxen.  \cite{css3box}}
+	\label{fig:cssboxmodel01}
+\end{figure}
+
+Jede Box besteht aus den Bereichen Inhalt (\textit{content}), Innenabstand (\textit{padding}), Rahmen (\textit{border}) und Außenabstand (\textit{margin}), dargestellt in Abbildung \ref{fig:cssboxmodel02}.
+
+\begin{figure}
+	\centering
+		\includegraphics[height=8cm]{cssboxmodel02}
+	\caption{Die verschiedenen Bereiche einer CSS Box.  \cite{css3box}}
+	\label{fig:cssboxmodel02}
+\end{figure}
+
+Es wird zwischen verschiedenen Darstellungsarten von Boxen unterschieden, sie werden mit dem "`display"' Attribut gesetzt. 
+
+Die für die Formatierung von wissenschaftlichen Publikationen wichtigsten Darstellungsarten sind \textit{display:inline}, \textit{display:block} und \textit{display:run-in}. 
+
+"`Inline"' Elemente werden im normalen Textfluss der Elternbox dargestellt, "`Block"' Elemente hingegen werden als eigenständig betrachtet und dementsprechend dargestellt. "`Run-in"' Elemente sind ein Sonderfall, sie erlauben es zwei aufeinanderfolgende Blockelemente zu verschmelzen. Beispielsweise wird eine als "`Run-in"' deklarierte Überschrift als erstes Wort des nachfolgenden Absatzes dargestellt.
+
+Jedes XHTML-Element hat eine vorgegebene Darstellungsart, \textit{<b>} Elemente beispielsweise werden "`Inline"' dargestellt, \textit{<p>} Elemente als "`Block"'.
+
+Für die Größe jeder Box können Höhe (\textit{width}) und Breite (\textit{height}), auch als Mindest- (\textit{min-width}, \textit{min-height}) und Höchstwert (\textit{max-width}, \textit{max-height}), angegeben werden. Größenangaben können absolut oder als Prozentsatz der verfügbaren Fläche angegeben werden.
+
+Die Größe von Innenabstand (\textit{padding-top}, \textit{padding-right}, \textit{padding-bottom}, \textit{padding-left}) Rahmen (\textit{border-top-width}, \textit{border-right-width}, \textit{border-bottom-width}, \textit{border-left-width}) und Außenabstand (\textit{margin-top}, \textit{margin-right}, \textit{margin-bottom}, \textit{margin-left}) können ebenfalls für jede Seite einer Box angegeben werden. 
+
+Innenabstände können für jedes Element angegeben werden, ebenso Rahmendicke, Art (\textit{border-style}) und Farbe (\textit{border-color}). 
+
+Außenabstände können für die meisten Elemente angegeben werden, mit Ausnahme von Tabellen und einigen "`Inline"' Elementen. Außenabstände benachbarter Boxen können verschmolzen werden (\textit{margin-collapse}).
+
+Ein weiteres wichtiges Werkzeug zu Anordnung von Elementen ist die Möglichkeit der Manipulation des Elementflusses. Mit dem Attribut \textit{float} kann angegeben werden ob die Box links (\textit{left}) oder rechts (\textit{right}) angeordnet werden soll, Inhalt fließt dann auf der freien Seite an der Box vorbei. 
+
+Mit dem Attribut \textit{clear} (\textit{left}, \textit{right}, \textit{both}) kann ein Umfließen wieder unterbrochen werden. Beispielsweise fließt einen Box mit dem Attribut \textit{clear:left} nicht neben einer Box mit dem Attribut \textit{float:left}, sie wird darunter angezeigt. Siehe auch Abbildung \ref{fig:cssboxmodel03}.
+
+\begin{figure}
+	\centering
+		\includegraphics[height=8cm]{cssboxmodel03}
+	\caption{Darstellung der CSS Eigenschaften "`float"' und "`clear"'.  \cite{css3box}}
+	\label{fig:cssboxmodel03}
+\end{figure}
+
+\subsection{Textformatierung}\label{chp:Textformatierung}
+Ein wesentlicher Bestandteil der Formatierung von wissenschaftlichen Publikationen ist die Textformatierung \cite{css3text}, \cite{css3fonts}, daher werden im folgenden die relevanten CSS-Attribute beschrieben.
+
+Die Schriftart eines Elements kann mit dem \textit{font-family} Attribut angegeben werden. Die Angabe mehrerer Schriftarten und Familien ist möglich, falls die erstgenannte Schriftart nicht vorhanden ist wird die nächste genommen. \textit{h1\{font-family: "`Helvetica"', "`Arial"', "`sans-serif"'\}} beispielsweise legt fest das Überschriften erster Ordnung in "`Helvetica"' dargestellt werden sollen, falls nicht vorhanden in "`Arial"' und als letzte Möglichkeit als irgendeine serifenlose Schrift.
+
+Die Schriftgröße kann mit \textit{font-size} angegeben werden, die Schriftdicke mit \textit{font-weight}. Mit \textit{font-variant} kann angegeben werden ob der Text normal (\textit{normal}) oder in Kapitälchen (\textit{small-caps}) dargestellt werden soll.
+
+Der Schriftstill wird mit \textit{font-style} festgelegt, mögliche Werte sind normal (\textit{normal}), kursiv (\textit{italic}) und schräg (\textit{oblique}). 
+
+Die Zeilenhöhe, und damit auch der Zeilenabstand, läßt sich mit \textit{line-height} angeben, Wortabstand mit \textit{word-spacing} und der Buchstabenabstand mit \textit{letter-spacing}.
+
+Die Ausrichtung des Textes kann mit \textit{text-align} eingestellt werden, die relevanten Attribute sind Blocksatz (\textit{justify}), zentriert (\textit{center}), links- (\textit{left}) und rechtsbündig (\textit{right}). 
+
+Das Einrücken der ersten Zeile eines Absatzes ist mit \textit{text-indent} möglich.
+
+\subsection{Listenformatierung}\label{chp:Listenformatierung}
+Die Darstellung von Listen \cite{css3lists}, insbesondere der Aufzählungszeichen, kann in CSS mit dem Attribut \textit{list-style-type} angegeben werden. 
+
+Es sind neben verschiedenen Aufzählungszeichen, wie zum Beispiel Kreis (\textit{circle}) oder Viereck (\textit{square}) auch zahlreiche Nummerierungsarten möglich. Unter anderem mit dezimalen Zahlen (\textit{decimal}), wahlweise auch mit führender Null (\textit{decimal-leading-zero}), große oder kleine römische Zahlen (\textit{upper- / lower-roman}) oder auch große und kleine lateinische Buchstaben (\textit{upper-, lower-latin}) möglich.
+
+Alternativ kann mit \textit{list-style-image} auch ein eigenes Aufzählungszeichen eingebunden werden.
+
+Mit \textit{list-style-position} kann festgelegt werden ob das Aufzählungszeichen innerhalb der Box (\textit{inside}) dargestellt werden soll oder nicht (\textit{outside}).
+
+\subsection{Layouts für verschiedene Ausgabemedien}\label{chp:Layouts für verschiedene Ausgabemedien}
+Mit CSS 2.1 ist es möglich medienspezifische Formatierungen festzulegen. Medientypen sind unter anderem \textit{handheld}, \textit{print}, \textit{projection} oder \textit{screen}.
+
+Medienspezifische Bereiche werden im Stylesheet mit \textit{@media typ} eingeleitet. \textit{@media screen\{* \{font-family:"'sans-serif"'\}\}} legt beispielsweise fest das für die Ausgabe auf den Bildschirm eine serifenlose Schrift verwendet werden soll.
+
+In XHTML-Dokumente können alternativ auch, mit dem Attribut \textit{media="'type"'} ausgezeichnet, medienspezifische Stylesheets eingebunden werden.
+
+Mit den in CSS 3 neu eingeführten Medienabfragen \cite{css3media} werden die Auswahlmöglichkeiten um Medieneigenschaften erweitert. Medienabfragen bestehen aus einem Medientyp und keiner oder mehreren Medieneigenschaften. Verknüpfung erfolgt durch die logischen Operatoren "`und"' (\textit{and}), "`oder"' (\textit{,}) und "`nicht"' (\textit{not}). Eine Deklaration für Farbmonitore wäre beispielsweise \textit{@media screen and (color) \{...\}}.
+
+Die vielfältigen Medieneigenschaften wie zum Beispiel Höhe des Ausgabemediums (\textit{device-height}), Ausrichtung (\textit{orientation}), Seitenverhältniss (\textit{aspect-ratio}) oder Auflösung (\textit{resolution}) lassen sich auch meistens als Mindest- (vorgestelltes \textit{min-}) oder Höchstwert (vorgestelltes \textit{max-}) angeben.
+
+\subsection{Automatisch erzeugte und veränderte Inhalte}\label{chp:Automatisch erzeugte und veraenderte Inhalte}
+Für die Formatierung von wissenschaftlichen Publikationen ist auch das automatische Erzeugen oder Verändern von Inhalten erforderlich \cite{css3content}. Arbeiten wie die Nummerierung von Überschriften oder das Anordnen von Bildern oder ähnliches muss automatisch erfolgen. 
+
+Der Zugriff auf automatisch erzeugte Inhalte erfolgt über Pseudoelemente, welche bereits in \ref{chp:Verbindung von Inhalt und Darstellung} behandelt wurden.
+
+Der Inhalt von (Pseudo)Elementen, Seitenrändern und bestimmter Seitenbereiche (siehe auch \ref{chp:Layout für Seitenbasierende Medien}) kann mit dem Attribut \textit{content} verändert werden. 
+
+Hierfür stehen eine Vielzahl möglicher automatisch erzeugter Inhalte zur Verfügung,  wie unter anderem Anführungszeichen (\textit{quotes}), Zähler (\textit{counter}), URLs (\textit{url}), Text (\textit{string}) sowie der eigentliche Elementinhalt (\textit{contents}). 
+
+Kombinationen sind durch Aneinanderreihung möglich, Alternativen werden mit einem Komma getrennt. Beispielsweise zeigt \textit{h1\{content: url(1), url(2), contents;\}} den Inhalt von Url1, falls vorhanden, ansonsten den Inhalt von Url2 und als letzte Alternative den Elementinhalt von \textit{<h1>}.
+
+Die Darstellung von (Pseudo)Elemente kann verschoben werden, dafür ist das Attribut \textit{move-to} zuständig. Elemente werden aus dem Elementfluss entnommen und an der gewünschten Stelle dargestellt. Mögliche Werte sind \textit{normal}, \textit{here} oder ein Selektor zur Angabe der gewünschten Position.
+
+Die Art der Anführungszeichen kann mit dem Attribut \textit{quotes} festgelegt werden. So lassen sich zum Beispiel verschiedene Anführungszeichen für unterschiedliche Sprachen festlegen. Automatisch erzeugt und eingefügt werden sie mit dem bereits beschriebenen \textit{content} Attribut. 
+
+Ein automatisches einschließen von Zitaten kann beispielsweise wie folgt angegeben werden:
+\textit{blockqoute:before \{content: open-quote\} blockqoute:after \{content: close-quote\}}.
+
+Für die automatische Nummerierung sind die Attribute \textit{counter-increment} und \textit{counter-reset} zuständig. 
+
+Mit \textit{counter(name)} wird ein Zähler erzeugt und dargestellt, mit \textit{counter-increment} hochgezählt und mit \textit{counter-reset} zurückgesetzt.
+
+Folgendes Beispiel zeigt eine Möglichkeit Überschriften zweiter Ordnung zu nummerieren:
+\textit{h2:before \{content: counter(section); counter-increment: section;\}}
+\textit{h1 \{counter-reset: section;\}}.
+
+Es gibt auch Elemente wie nummerierte Listen, deren Zähler nicht extra angegeben und manipuliert werden müssen. Wird so ein Zähler verschachtelt, also sowohl im Eltern- als auch im Kindelement erhöht, so wird automatisch eine neue Instanz erzeugt. Daher sind auch verschachtelte Listen möglich.
+
+Alle von Listen (siehe \ref{chp:Listenformatierung}) bekannte Typen sind auch für andere Zähler möglich und können nach dem Zählernamen angegeben werden. Beispielsweise erzeugt \textit{counter(name, upper-latin)} einen Zähler "`name"' der in lateinischen Großbuchstaben dargestellt wird.
+
+\subsection{Layout für seitenbasierende Medien}\label{chp:Layout für Seitenbasierende Medien}
+Für die Formatierung von zum Druck bestimmter Medien ist ein seitenbasierendes Layout \cite{css3page} nötig. Seiten besitzen formatabhängige Eigenschaften und werden in verschiedene Bereiche unterteilt. Die Verteilung des Inhaltes erfolgt nach festen Regeln. Im folgenden werden die Möglichkeiten der Formatierung des Inhaltes von Dokumenten für die Darstellung auf seitenbasierenden Medien mit CSS dargestellt.
+
+Hierfür existieren den in \ref{chp:Elementanordnung} beschriebenen Elementboxen sehr ähnliche Seitenboxen. Sie bestehen aus dem Seitenbereich, Innenabstand der Seite, Seitenrahmen und dem Seitenrand, welcher in Randboxen für Kopf und Fußzeilen unterteilt ist. Der Aufbau ist in Abbildung \ref{fig:csspagebox}. dargestellt.
+
+\begin{figure}
+	\centering
+		\includegraphics[height=8cm]{csspagebox}
+	\caption{Aufbau einer CSS Seitenbox. \cite{css3page}}
+	\label{fig:csspagebox}
+\end{figure}
+
+
+Für diese Bestandteile von Seitenboxen können, wie bei normalen Elementboxen auch, verschiedenen Attribute angegeben werden.
+Darstellungseigenschaften für seitenbasierende Medien werden im Stylesheet mit \textit{@page{...}} ausgezeichnet. Die Randbereiche können auf ähnliche Weise angesprochen werden, beispielsweise kann mit \textit{@bottom-center\{content: "`Seite "' counter(page);\}} ein Seitenzähler mittig im unteren Seitenrand angebracht werden.
+
+Für seitenbasierende Medien stehen außerdem spezielle Pseudoelemente bereit, welche die Formatierung von linken Seiten (\textit{:left}), rechten Seiten (\textit{:right}) und der erste Seite (\textit{:first}) ermöglichen. Diese erlauben es beispielsweise bei doppelseitig bedruckten Seiten unterschiedliche Aussenränder für die innere und äußere Seite anzugeben.
+
+Regeln für Seitenumbrüche können ebenfalls angegeben werden, und zwar vor (\textit{page-break-before}), nach (\textit{page-break-after}) oder innerhalb (\textit{page-break-inside}) von Blockelementen. 
+
+Mögliche Werte für Umbrüche vor oder nach Elementen sind automatisch umbrechen (\textit{auto}), immer umbrechen (\textit{always}), Umbruch vermeiden (\textit{avoid}) oder so umbrechen dass die nächste Seite als linke (\textit{left}) beziehungsweise rechte (\textit{right}) Seite dargestellt wird. Für den Umbruch innerhalb von Elementen sind nur die Angaben automatisch umbrechen und Umbruch vermeiden möglich.
+
+Für die Behandlung von \textit{Schusterjungen} (Seitenumbruch nach der ersten Zeile eines Absatzes) und \textit{Hurenkindern} (Seitenumbruch vor der letzten Zeile eines Absatzes) sind die Attribute \textit{orphans} und \textit{widows} vorhanden. Mit ihnen kann festgelegt werden wie viele Zeilen eines Absatzes mindestens am Ende beziehungsweise Anfang einer Seiten stehen müssen.
+
+\subsection{Mehrspaltige Layouts}\label{chp:Mehrspaltige Layouts}
+CSS 3 ermöglicht es auch den Inhalt von Elementen mehrspaltig \cite{css3multicol} darzustellen. Die Eigenschaften des mehrspaltigen Layouts können durch die Attribute Spaltenanzahl (\textit{column-count}), Spaltenbreite (\textit{column-width}), Spaltenabstand (\textit{column-gap}) und Spaltenrahmen (\textit{column-rule}) angegeben werden. Für den Spaltenrahmen kann, wie für sonstige Rahmen auch (siehe \ref{chp:Elementanordnung}), Breite, Farbe und Art angegeben werden.
+
+Spaltenumbrüche vor (\textit{column-break-before}) oder nach (\textit{column-break-after}) Blockelementen können, ähnlich Seitenumbrüchen (siehe \ref{chp:Layout für Seitenbasierende Medien}), angegeben werden. Mögliche Werte sind automatischer Umbruch (\textit{auto}) oder Umbruch vermeiden (\textit{avoid}).
+
+Mit dem Attribut \textit{column-span} kann die Anzahl der Spalten über die sich ein Element erstrecken soll, angegeben werden. In folgendem Beispiel erstreckt sich die Überschrift über alle Spalten, siehe Abbildung \ref{fig:csscolumnspan}.
+
+Des weiteren kann die Art des Spaltenauffüllens (\textit{column-fill}) angegeben werden. Mögliche Werte sind sequenziell (\textit{auto}), und ausgeglichen (\textit{balance}), was insbesondere bei Spalten fester Höhe wichtig ist. So kann erzwungen werden das mehrere Spalten zur gleichen Höhe aufgefüllt werden.
+
+\begin{figure}
+	\centering
+		\includegraphics[height=4cm]{csscolumnspan}
+	\caption{Mehrspaltiges Layout mit Spaltenübergreifender Überschrift. \cite{css3multicol}}
+	\label{fig:csscolumnspan}
+\end{figure}
+
+\subsection{Darstellung mathematischer Formeln}\label{chp:Darstellung mathematischer Formeln}
+Mathematische Formeln können, aufgrund der in \ref{chp:XHTML, CSS und JavaScript} Beschriebenen Eigenschaften von XHTML, in MathML geschrieben und eingebettet werden. 
+
+MathML ist eine auf XML basierende Auszeichnungssprache für mathematische Formeln, in ihr können mathematische Symbole und Ausdrücke ausgezeichnet werden. MathML bietet dafür eine Vielzahl an Elementen, deren Aufbau für die Arbeit nicht relevant ist, und auf die hier nicht weiter eingegangen wird.
+
+Die wichtigsten MathML-Elemente können in Verbindung mit XHTML und CSS genutzt werden. Nicht unterstützt werden hauptsächlich Elemente zur Darstellung welche durch CSS Eigenschaften überflüssig werden.
+
+\subsection{CSS Umsetzung}\label{chp:CSS Umsetzung}
+Mit den verfügbaren CSS Eigenschaften werden die in \ref{chp:Textstrukturierung mit XHTML} und \ref{chp:XHTML Umsetzung} beschriebenen Elemente entsprechend den Vorgaben formatiert. 
+
+Einen Ausschnitt aus dem CSS für das Format \textit{SIGCHI Conference Proceedings} sehen Sie in Abbildung \ref{fig:SIGCHICSS}.
+
+\begin{figure}
+	\centering
+		\includegraphics[height=24cm]{SIGCHICSS}
+	\caption{Ausschnitt des CSS für \textit{SIGCHI Conference Proceedings}.}
+	\label{fig:SIGCHICSS}
+\end{figure}
+
+\subsection{Eingeschränkte Browserunterstützung}\label{chp:Eingeschraenkte Browserunterstützung}
+Im \textit{Mozilla Firefox} ist die Implementierung der \textit{@Page Rule} (CSS 2.1 siehe \ref{chp:Layout für Seitenbasierende Medien}) fehlerhaft \cite{firefoxatpage}, daher sind für diesen Browser im Moment keine Angaben für die Seitenränder möglich. 
+
+Die Unterstützung von CSS 3 Modulen in den Browsern ist noch eingeschränkt, insbesondere die Module für Seitenbasierende Medien (siehe \ref{chp:Layout für Seitenbasierende Medien}) und Mehrspaltige Layouts (siehe \ref{chp:Mehrspaltige Layouts}). Daher muss deren Funktionalität durch JavaScript nachgebildet werden, was im Abschnitt \ref{chp:Mehrspaltiges Druck Layout} näher beschrieben wird. Eine Übersicht über die verfügbaren CSS3 Funktionen bietet auch Tabelle \ref{tab:cssready}.
+
+\begin{table*}
+	\centering
+		\begin{tabular}{lcr}
+			Funktion: & Umsetzung möglich mit:	& Tatsächliche Umsetzung:	\\			
+			Elementanordnung	& CSS	&	CSS	\\
+			Textformatierung	&	CSS	&	CSS	\\
+			Listenformatierung & CSS & CSS und JS	\\
+			Layouts für verschiedene Ausgabemedien	& CSS	&	CSS	\\
+			Automatisch erzeugte und veränderte Inhalte & CSS & CSS und JS	\\
+			Layout für seitenbasierende Medien	&	CSS	& CSS und JS	\\
+			Mehrspaltige Layouts & CSS &	CSS und JS	\\
+		\end{tabular}
+	\caption{Übersicht über die möglichen CSS3 Funktionen und ihre tatsächliche Umsetzung.}
+	\label{tab:cssready}
+\end{table*}
+%\_____________________________________________________________________
+
+\cleardoublepage % Neue rechte Seite anfangen
+\section{JavaScript}\label{chp:JavaScript}
+Im folgenden werden die wichtigsten Funktionen zur Dokumentveränderung mit JavaScript dargestellt. Anschließend werden Alternativen zu noch nicht verfügbaren CSS Eigenschaften aufgezeigt. 
+Außerdem werden JavaScript Lösungen für in Abschnitt \ref{chp:Gaengige Formatierungen} ermittelte Anforderungen, die nichts mit der Darstellung zu tun haben, vorgestellt.
+Abschließend folgt eine Zusammenfassung in der auf die Möglichkeiten und Limitierungen, insbesondere in zur Zeit verfügbaren Browsern, eingegangen wird.
+
+\subsection{Veränderungen des Dokumentbaumes}\label{chp:Veränderungen des Dokumentbaumes}
+Die Struktur eines XHTML Dokumentes wird durch einen Dokumentbaum dargestellt, der mit JavaScript verändert werden kann \cite{dom3core}, \cite{dom3elementraversal}. Dafür gibt es zahlreiche Funktionen, wovon die für die Formatierung von wissenschaftlichen Publikationen wichtigsten im folgenden dargestellt werden. 
+
+Die Knoten des Dokumentbaumes werden in Elementen und Textknoten unterteilt, letztere können selbst keine Kinder besitzen und enthalten Textinhalt.
+Ein Beispiel für den Dokumentteilbaum einer Tabelle ist in Abbildung \ref{fig:domtable} dargestellt.
+
+Auf das gesamte XHTML Dokument kann durch das Objekt \textit{document} zugegriffen werden, auf den Rumpf durch \textit{document.body} und auf die zugeordneten Stylesheets mit \textit{document.styleSheets[int]}. 
+
+Für die Auswahl von Elementen stehen die Funktionen \textit{.getElementById("`id"')} für Elemente denen eine Identität zugewiesen wurde, \textit{.getElementsByClassName("`class"')} für alle Elemente einer Klasse sowie  \textit{.getElementsByTagName("`tag"')} für alle Elemente eines Typs zur Verfügung. 
+
+Zur Auswahl des Elternelementes gibt es \textit{.parentNode}, für alle Kindknoten \textit{.childNodes}. Die Anzahl der Kindelemente kann mit \textit{.childElementCount} bestimmt werden, mit \textit{.hasChildNodes} kann überprüft werden ob das Element leer ist.
+
+Zur Navigation durch Kind- und Geschwisterknoten gibt es sowohl Funktionen nur für Elemente als auch Funktionen für Elemente und Textknoten. Die folgenden Funktionen liefern nur Elemente, durch weglassen des mittigen "`Element"' werden alle Knoten zurückgegeben. 
+
+Auf den ersten Kindknoten kann man mit \textit{.firstElementChild} zugreifen, auf den letzten Kindknoten mit \textit{.lastElementChild}. Zur Auswahl des vorherigen Geschwisterknoten gibt es \textit{.previousElementSibling}, für den nachfolgenden \textit{.nextElementSibling}.
+
+Elemente können mit \textit{.createElement(nodeName)} erzeugt werden, Textknoten mit \textit{.createTextNode(string)}. Knoten können mit \textit{.cloneNode(node)} kopiert werden, mit \textit{.appendChild(node)} an ein Element angehängt und mit \textit{.removeChild(node)} aus einem Element entfernt werden. Sie können des weiteren mit \textit{.insertBefore(node, refNode)} vor bestimmten Elementen eingefügt werden sowie mit \textit{.replaceChild(node, oldNode)} andere Knoten ersetzen.
+
+Der Typ eines Knotens kann mit \textit{.nodeName} abgefragt werden, die Klasse mit \textit{.className} und der Inhalt alle Textknoten eines Elementes mit \textit{.wholeText}. 
+
+CSS Attribute können mit \textit{.style.attribut = "`value"'} gesetzt werden und mit \textit{document.defaultView.getComputedStyle(node, null).attribut} abgefragt werden.
+
+Allerdings sind diese Werten, insbesondere die Größe der Elemente betreffend, je nach Browser leicht verschieden.
+
+\begin{figure}
+	\centering
+		\includegraphics{table}
+	\caption{Darstellung des Dokumentteilbaumes einer Tabelle. \cite{dom3core}}
+	\label{fig:domtable}
+\end{figure}
+
+
+\subsection{Mehrspaltiges Drucklayout}\label{chp:Mehrspaltiges Druck Layout}
+Die Darstellung des mehrspaltigen Drucklayouts erfolgt mit Hilfe von verschachtelten \textit{<div>} Elementen, welche mit dem Inhalt gefüllt werden. Die Struktur einer Seite mit zwei Spalten sehen Sie in Abbildung \ref{fig:divpage}.
+
+Der Ablauf des Scriptes ist folgendermaßen:
+
+\begin{enumerate}
+	\item Intialisierung.
+	\item BibTeX Datei einlesen.
+	\item Verweise auflösen.
+	\item Spalten erstellen und Inhalt einfügen.
+	\item Zähler erstellen.	
+	\item Inhalte ausrichten.
+	\item Seitenumbrüche erzeugen.
+\end{enumerate}
+
+Bei der Initialisierung wird als erstes ermittelt um welchen Typ von "`Paper"' es sich handelt. Dazu wird der Dateiname des Stylesheets (zum Beispiel "`sigchi.css"') eingelesen wodurch sich der verwendete Typ ("`sigchi"') ergibt. 
+
+Je nach Typ werden dann die entsprechenden Eigenschaften wie Größe des Inhaltsbereiches, Anzahl und Abstand der Spalten und automatische Elementanordnung festgelegt. Die Höhe der Spalten der ersten Seite wird berechnet, wobei auf die Größe vorhergegangener Elemente und, falls vorhanden, die Größe der Copyright Box eingegangen wird. Es werden die  \textit{dpi} (dots per inch, engl. für Punkte pro Zoll) des Monitors sowie die Höhe einer Zeile bestimmt, außerdem wird festgelegt ob es sich um die Bildschirm oder Druckausgabe handelt.
+
+Im nächsten Schritt wird, mit Hilfe des OpenSource \textit{Javascript BibTeX Parsers} \cite{jsbib} die BibTeX-Datei eingelesen, welche als \textit{<object>} im XHTML-Dokument eingebunden sein muss.
+
+Die BibTeX-Einträge werden entsprechend der Formatvorlage des "`Papers"' formatiert und in das XHTML-Dokument eingefügt. Für das Ausgabemedium Bildschirm werden Urls in den Quellenangaben in Hyperlinks umgewandelt, falls keine Url vorhanden ist wird ein Hyperlink auf eine Suchanfrage für Google Scholar erzeugt.
+
+Im nächsten Schritt werden sämtliche mittels \textit{<cite>} gekennzeichnete Verweise auf Bilder, Tabellen, Formeln, Fußnoten oder Literaturangaben aufgelöst. Bei der Druckausgabe werden sie durch der Vorgabe entsprechende Zeichen (zum Beispiel "`[1]"') ersetzt, bei der Bildschirmausgabe durch Hyperlinks.
+
+Anschließend werden, für die Druckausgabe, \textit{<div>} Behälter für die Spalten erstellt und mit Inhalt gefüllt. Der Inhalt wird elementweise in die Spalten kopiert, falls ein Textelement zu groß ist wird es zeilenweise eingefügt.
+
+\textit{Schusterjungen}, das ist die erste Zeile eines Absatzes am Ende einer Spalte, und \textit{Hurenkinder}, das ist die letzte Zeile eines Absatzes am Anfang einer Spalte, sowie alleinstehende Überschriften werden vermieden.
+
+Bei ersten Zeilen eines Absatzes und Überschriften wird dazu geprüft ob noch Platz für eine zusätzliche Zeile ist, falls nicht wird vor ihnen umgebrochen.
+Bei letzten Zeilen eines Absatzes wird geprüft ob sie am Anfang einer Spalte stehen, dann wird von der vorherigen Spalte die letzte Zeile geholt.
+
+Bilder und Tabellen werden nur zusammen mit ihren Überschriften eingefügt, falls dadurch am Spaltenende Platz frei bleibt wird dieser mit nachfolgendem Text gefüllt.
+Fußnoten werden direkt nach dem Element, in dem das erste mal auf sie verwiesen wird, eingefügt.
+
+Da die CSS eigenen Zähler aufgrund der verschachtelten \textit{<div>} Behälter nicht verwendbar sind (siehe \ref{chp:Automatisch erzeugte und veraenderte Inhalte} und \ref{chp:Listenformatierung}), werden im nächsten Schritt Zähler für Überschriften und Listen erzeugt und entsprechend der Formatvorgaben eingefügt.
+
+Anschließend folgt das Ausrichten der Inhalte. Für die Druckausgabe werden die Spalten ausgerichtet und die Fußnoten ans Spaltenende verschoben. Für mache "`Paper"'-Typen ist erforderlich, dass Bilder, Tabellen und Formeln in den Ecken der Spalten platziert werden. Das wird, falls eingestellt, ebenfalls in diesem Schritt vorgenommen.
+
+Bei der Ausgabe auf dem Monitor werden lediglich die Fußnoten ans Ende des Dokumentes geschoben.
+
+Abschließend wird für die Druckausgabe noch für jede Seite ein eigener \textit{<div>} Behälter mit erzwungenem Seitenumbruch erstellt und gefüllt.
+
+\begin{figure}
+	\centering
+		\includegraphics[height=8cm]{divpage}
+	\caption{Seitenaufteilung mit \textit{<div>} Behältern.}
+	\label{fig:divpage}
+\end{figure}
+
+
+%\_____________________________________________________________________
+
+\cleardoublepage
+\section{Fazit}\label{chp:Fazit}
+Wie am Anfang der Arbeit (\ref{chp:Vorteile gegenüber konventionellen Formaten}) dargestellt, hat die Formatierung wissenschaftlicher Publikationen mit XHTML und CSS erhebliche Vorteile gegenüber den konventionellen Formaten.
+
+Einsetzbar wird sie allerdings nur wenn die Rückwärtskompatibilität bezüglich des Abgabeformates gegeben ist, also den Formatvorlagen entsprechende PDF-Dateien erzeugt werden können. Diese Anforderungen wurden anhand gängiger Formate untersucht (\ref{chp:Gaengige Formatierungen}) und es wurden Lösungsmöglichkeiten mit CSS 3 dargestellt (\ref{chp:XHTML und CSS}). Anschließend wurde überprüft welche dieser CSS 3 Funktionen bereits verfügbar ist, fehlende Funktionen wurden mit JavaScript (\ref{chp:JavaScript}) nachgebaut. Das Ergebniss sehen Sie in einer Gegenüberstellung einer orginalen PDF-Datei eines "`Paper"'-Templates mit der aus XHTML, CSS und JS erzeugten PDF-Datei in Abbildung \ref{fig:cssvspdf}.
+
+Abschließend kann man sagen das die Formatierung wissenschaftlicher Publikationen mit XHTML und CSS zum jetzigen Zeitpunkt, trotz teilweise fehlender CSS 3 Implementierung, möglich ist.
+
+Mit fortschreitender CSS 3 Implementierung werden die Möglichkeiten für die Formatierung mit XHTML und CSS weiter zunehmen, wodurch sich XHTML und CSS auch als Austauschformat für wissenschaftlicher Publikationen durchsetzen könnte.
+
+\begin{figure}
+	\centering
+		\includegraphics[height=10cm]{cssvspdf}
+	\caption{Gegenüberstellung einer orginalen PDF-Datei (a) einer Seite eines "`Paper"'-Templates mit der aus XHTML, CSS und JS erzeugten PDF-Datei (b).}
+	\label{fig:cssvspdf}
+\end{figure}
+
+%______________________________________________________________________
+
+\cleardoublepage
+\fancyhead[LE,RO,LO,RE]{} % Keine Kopfzeile mehr oben auf jeder Seite
+\section*{Inhalt der beigelegten CD}
+\begin{enumerate}
+	\item Readme-Datei.
+	\item Quelltext.
+	\item Projektarbeit im PDF-Format.
+	\item Projektarbeit im LaTeX-Format.
+	\item Folien der Endpräsentation.	
+	\item Paper Templates orginale PDF-Dateien.
+	\item Paper Templates erzeugte PDF-Dateien.
+\end{enumerate}
+
+%______________________________________________________________________
+
+\cleardoublepage
+
+\bibliographystyle{plainurl}
+\bibliography{literature}
+\end{document}
