@@ -51,9 +51,9 @@ public class _Start {
 		ArrayList<String> content = new ArrayList<String>();
 		float x1 = list1.get(0).getX(), x2 = list2.get(0).getX(), y1 = list1.get(0).getY(), y2 = list2.get(0).getY();
 
-		content.add("Position of '" + SEARCH_THIS_TERM + "' in " + FILE_1 + ":\n");
+		content.add("Position of term '" + SEARCH_THIS_TERM + "' in " + FILE_1 + ":\n");
 		content.add("x = " + x1 + ", y = " + y1 + "\n\n");
-		content.add("Position of '" + SEARCH_THIS_TERM + "' in " + FILE_2 + ":\n");
+		content.add("Position of term '" + SEARCH_THIS_TERM + "' in " + FILE_2 + ":\n");
 		content.add("x = " + x2 + ", y = " + y2 + "\n\n");
 		content.add("Position Differences:\n");
 		content.add("deltaX = " + diff(x1, x2) + ", deltaY = " + diff(y1, y2));
