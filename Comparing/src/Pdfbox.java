@@ -18,6 +18,7 @@ public class Pdfbox {
 
 	private static final String LB = "\n"; // Linebreak
 	private static final String DLB = "\n\n"; // Double Linebreak
+	private static final String SAVE_HERE = "results/Result_Pdfbox.txt";
 
 	public Pdfbox() {
 		System.out.println("Pdfbox:\t\tInitialized");
@@ -49,7 +50,7 @@ public class Pdfbox {
 	public void createContentFile(String content) {
 		PrintWriter writer;
 		try {
-			writer = new PrintWriter("results/Result_Pdfbox.txt", "UTF-8");
+			writer = new PrintWriter(SAVE_HERE, "UTF-8");
 			writer.println(content);
 			writer.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
@@ -57,6 +58,15 @@ public class Pdfbox {
 		}
 	}
 
+	/**
+	 * Find positions of 'key' in the pdf file on a given page
+	 *
+	 * @param pdfFile the pdf file
+	 * @param pageNum the page number
+	 * @param key the term to look for
+	 * @return ArrayList containing all occurrences of the term saved as TextPosition
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public ArrayList findPositions(String pdfFile, int pageNum, final String key) throws IOException {
 		PDDocument document = PDDocument.load(pdfFile);
 		final StringBuffer extractedText = new StringBuffer();
@@ -76,24 +86,22 @@ public class Pdfbox {
 	}
 
 	/**
-	 * @param file1
-	 *            First pdf
-	 * @param file2
-	 *            Second pdf
-	 * @param term
-	 *            Term to be searched within the pdfs
-	 * @param list1
-	 *            All occurrences of 'term' in file1
-	 * @param list2
-	 *            All occurrences of 'term' in file2
+	 * Format pdfbox results.
+	 *
+	 * @param file1 First pdf
+	 * @param file2 Second pdf
+	 * @param term  Term to be searched within the pdfs
+	 * @param list1 All occurrences of 'term' in file1
+	 * @param list2 All occurrences of 'term' in file2
 	 * @return Formatted String of Pdfbox results
 	 */
 	public String formatPdfboxResults(String file1, String file2, String term, ArrayList<TextPosition> list1,
 			ArrayList<TextPosition> list2) {
 		ArrayList<String> content = new ArrayList<String>();
 		TextPosition item1 = list1.get(0), item2 = list2.get(0);
-		double x1 = round(item1.getX()), x2 = round(item2.getX()), y1 = round(item1.getY()), y2 = round(item2.getY()), height1 = round(item1.getHeight()),
-				height2 = round(item2.getHeight()), width1 = round(item1.getWidth()), width2 = round(item2.getWidth()),
+		double x1 = round(item1.getX()), x2 = round(item2.getX()), y1 = round(item1.getY()), y2 = round(item2.getY()),
+				height1 = round(item1.getHeight()), height2 = round(item2.getHeight()),
+				width1 = round(item1.getWidth()), width2 = round(item2.getWidth()),
 				space1 = round(item1.getWidthOfSpace()), space2 = round(item2.getWidthOfSpace());
 
 		// Files being compared
@@ -124,13 +132,14 @@ public class Pdfbox {
 		return result;
 	}
 
-	// Return the distance of two float values
+	// Return the distance of two double values
 	private static double diff(double x, double y) {
 		double result = x - y;
 		result = round(result);
 		return result >= 0 ? result : result * (-1);
 	}
-	
+
+	// Round a double value to 3 decimals
 	private static double round(double d) {
 		return Math.round(d * 100.0) / 100.0;
 	}
