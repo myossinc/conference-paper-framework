@@ -41,6 +41,7 @@ public class _Start {
 
 	private static void createPseudoHtml() {
 		Pdfminer miner = new Pdfminer();
-		miner.createHtml("");
+		miner.createHtml(Const.FILE_2);
+		miner.processHtml();
 	}
 }
