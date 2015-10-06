@@ -1,24 +1,28 @@
 File 1:	samples/LatexEA.pdf
 File 2:	samples/WordEA.pdf
 
-Position of term 'First'
-	File 1:		x =	195.0	| y = 227.14
-	File 2:		x =	208.65	| y = 217.87
-	Delta:		x =	13.65	| y = 9.27
+Position of term 'Author'
+	File 1:		x =	223.62	| y = 227.14
+	File 2:		x =	506.72	| y = 336.96
+	Delta:		x =	283.1	| y = 109.82
 
-Height of term 'First'
+Height of term 'Author'
 	File 1:		5.18
-	File 2:		5.12
-	Delta:		0.06
+	File 2:		6.44
+	Delta:		1.26
 
-Width of term 'First'
-	File 1:		2.75
-	File 2:		3.39
-	Delta:		0.64
+Width of term 'Author'
+	File 1:		3.21
+	File 2:		4.65
+	Delta:		1.44
 
 Width of space character
 	File 1:		2.29
-	File 2:		2.54
-	Delta:		0.25
+	File 2:		3.2
+	Delta:		0.91
+
+Font used
+	File 1:	NimbusSanL-Bold
+	File 2:	Verdana-Bold
 
 
