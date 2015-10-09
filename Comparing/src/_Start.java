@@ -29,6 +29,7 @@ public class _Start {
 			// Find occurrences of the search term in both files
 			list_file1 = box.findPositions(Const.FILE_1, 0, Const.SEARCH_THIS_TERM);
 			list_file2 = box.findPositions(Const.FILE_2, 0, Const.SEARCH_THIS_TERM);
+
 			
 			// Write results to a text file
 			String formattedResults = box.formatPdfboxResults(Const.FILE_1, Const.FILE_2, Const.SEARCH_THIS_TERM, list_file1, list_file2);
@@ -42,6 +43,7 @@ public class _Start {
 	private static void createPseudoHtml() {
 		Pdfminer miner = new Pdfminer();
 		miner.createHtml(Const.FILE_2);
+		miner.loadHtml();
 		miner.processHtml();
 	}
 }

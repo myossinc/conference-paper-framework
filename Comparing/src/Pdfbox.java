@@ -19,7 +19,7 @@ public class Pdfbox {
 	public Pdfbox() {
 	}
 
-	public void extractText(String path) {
+	public void extractText(String path) throws IOException {
 		PDFTextStripper pdfStripper = null;
 		PDDocument pdDoc = null;
 		COSDocument cosDoc = null;
@@ -39,6 +39,8 @@ public class Pdfbox {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			pdDoc.close();
 		}
 	}
 
@@ -82,6 +84,7 @@ public class Pdfbox {
 		};
 		PDPage page = (PDPage) document.getDocumentCatalog().getAllPages().get(pageNum);
 		textStripper.processStream(page, page.findResources(), page.getContents().getStream());
+		document.close();
 		return positions;
 	}
 
@@ -108,8 +111,15 @@ public class Pdfbox {
 				height1 = round(item1.getHeight()), height2 = round(item2.getHeight()),
 				width1 = round(item1.getWidth()), width2 = round(item2.getWidth()),
 				space1 = round(item1.getWidthOfSpace()), space2 = round(item2.getWidthOfSpace());
-		String font1 = item1.getFont().getBaseFont().substring(7, item1.getFont().getBaseFont().length()),
-				font2 = item2.getFont().getBaseFont().substring(7, item2.getFont().getBaseFont().length());
+
+		// Not all Base fonts are registered in the database
+		String font1 = "Unknown", font2 = "Unknown";
+		if (item1.getFont().getBaseFont() != null) {
+			font1 = item1.getFont().getBaseFont().substring(7, item1.getFont().getBaseFont().length());
+		}
+		if (item2.getFont().getBaseFont() != null) {
+			font2 = item2.getFont().getBaseFont().substring(7, item2.getFont().getBaseFont().length());
+		}
 
 		// Files being compared
 		content.add("File 1:\t" + file1 + Const.LB + "File 2:\t" + file2 + Const.DLB);

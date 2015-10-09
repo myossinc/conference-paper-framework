@@ -1,8 +1,8 @@
 public class Const {
 
 	// Relative paths
-	static final String FILE_1 = "samples/LatexEA.pdf";
-	static final String FILE_2 = "samples/WordEA.pdf";
+	static final String FILE_1 = "samples/LatexProceedings.pdf";
+	static final String FILE_2 = "samples/WordProceedings.pdf";
 	
 	// Locations of the results
 	static final String SAVE_PDFBOX = "results/Result_Pdfbox.txt";
@@ -21,7 +21,7 @@ public class Const {
 	// Other
 	static final String LB = "\n";
 	static final String DLB = "\n\n";
-	static final String SEARCH_THIS_TERM = "Author";
+	static final String SEARCH_THIS_TERM = "SIGCHI";
 	
 	static final String LEFT = "left";
 	static final String TOP = "top";
