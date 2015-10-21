@@ -138,8 +138,8 @@ public class Pdfbox {
 				+ width2 + Const.LB + "\tDelta:\t\t" + diff(width1, width2) + Const.DLB);
 
 		// Space character width
-		content.add("Width of space character" + Const.LB + "\tFile 1:\t\t" + space1 + Const.LB + "\tFile 2:\t\t"
-				+ space2 + Const.LB + "\tDelta:\t\t" + diff(space1, space2) + Const.DLB);
+//		content.add("Width of space character" + Const.LB + "\tFile 1:\t\t" + space1 + Const.LB + "\tFile 2:\t\t"
+//				+ space2 + Const.LB + "\tDelta:\t\t" + diff(space1, space2) + Const.DLB);
 
 		// Font
 		content.add("Font used" + Const.LB + "\tFile 1:\t" + font1 + Const.LB + "\tFile 2:\t" + font2 + Const.DLB);

@@ -1,25 +1,20 @@
-File 1:	samples/LatexProceedings.pdf
+File 1:	samples/MyProceedings.pdf
 File 2:	samples/WordProceedings.pdf
 
-Position of term 'SIGCHI'
-	File 1:		x =	194.22	| y = 92.25
-	File 2:		x =	190.47	| y = 78.0
-	Delta:		x =	3.75	| y = 14.25
+Position of term 'INTRODUCTION'
+	File 1:		x =	124.77	| y = 389.92
+	File 2:		x =	116.49	| y = 364.8
+	Delta:		x =	8.28	| y = 25.12
 
-Height of term 'SIGCHI'
-	File 1:		11.26
-	File 2:		12.55
-	Delta:		1.29
+Height of term 'INTRODUCTION'
+	File 1:		6.38
+	File 2:		6.19
+	Delta:		0.19
 
-Width of term 'SIGCHI'
-	File 1:		4.99
-	File 2:		5.0
-	Delta:		0.01
-
-Width of space character
-	File 1:		4.99
-	File 2:		5.0
-	Delta:		0.01
+Width of term 'INTRODUCTION'
+	File 1:		6.44
+	File 2:		6.41
+	Delta:		0.03
 
 Font used
 	File 1:	Unknown

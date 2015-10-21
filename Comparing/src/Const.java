@@ -1,7 +1,7 @@
 public class Const {
 
 	// Relative paths
-	static final String FILE_1 = "samples/LatexProceedings.pdf";
+	static final String FILE_1 = "samples/MyProceedings.pdf";
 	static final String FILE_2 = "samples/WordProceedings.pdf";
 	
 	// Locations of the results
@@ -21,7 +21,7 @@ public class Const {
 	// Other
 	static final String LB = "\n";
 	static final String DLB = "\n\n";
-	static final String SEARCH_THIS_TERM = "SIGCHI";
+	static final String SEARCH_THIS_TERM = "INTRODUCTION";
 	
 	static final String LEFT = "left";
 	static final String TOP = "top";
