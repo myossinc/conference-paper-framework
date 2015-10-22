@@ -12,7 +12,7 @@
 
 	<!-- SCRIPTS -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script type="text/javascript" src="scripts/underscore.js"></script>
+	<script type="text/javascript" src="src/underscore.js"></script>
 
 </head>
 
@@ -142,7 +142,7 @@
 			<h3>First Page Copyright Notice</h3>
 			<div>
 				This sample word document has the correct ACM SIGCHI copyright notice in place (see page 1, bottom of column 1). Accepted papers will be distributed in the conference publications. They will also be placed in the ACM Digital Library, where they will remain accessible to thousands of researchers and practitioners worldwide. ACM’s copyright and permissions policy is here:<br>
-				<a href="http://acm.org/publications/policies/copyright_policy" target="_blank">http://acm.org/publications/policies/copyright_policy</a>
+				<a href="http://acm.org/publications/policies/copyright_policy">http://acm.org/publications/policies/copyright_policy</a>
 			</div>
 		</div>
 
@@ -197,7 +197,7 @@
 
 		<div class="content">
 			Your references should be published materials accessible to the public. Internal technical reports may be cited only if they are easily accessible (i.e., you provide the address for obtaining the report within your citation) and may be obtained by any reader for a nominal fee. Proprietary information may not be cited. Private communications should be acknowledged in the main text, not referenced (e.g., “[Borriello, personal communication]”).<br>
-			References should be in ACM citation format: <a href="http://acm.org/publications/submissions/latex_style" target="_blank">http://acm.org/publications/submissions/latex_style</a>. This includes citations to internet resources [1,4,8,1] according to ACM format, although it is often appropriate to include URLs directly in the text, as above.
+			References should be in ACM citation format: <a href="http://acm.org/publications/submissions/latex_style">http://acm.org/publications/submissions/latex_style</a>. This includes citations to internet resources [1,4,8,1] according to ACM format, although it is often appropriate to include URLs directly in the text, as above.
 		</div>
 
 		<div class="content">
@@ -242,6 +242,14 @@
 		</div>
 
 		<div class="content">
+			<figure class="fullsize">
+				<img src="img/chi_proceedings_2.png" alt="World map">
+				<figcaption>Sample of a wide figure. Be sure to place at the top or bottom of the page. Ensure that important information is legible in both black-and-white and color printing. Image: CC-BY-ND ayman on Flickr.</figcaption>
+			</figure>
+		</div>
+
+		<!-- Separate long lists -->
+		<div class="content">
 			<h2>LANGUAGE, STYLE AND CONTENT</h2>
 			<div>		
 				The written and spoken language of SIGCHI is English. Spelling and punctuation may use any dialect of English (e.g., British, Canadian, US, etc.) provided this is done consistently. Hyphenation is optional. To ensure suitability for an international audience, please:
@@ -252,49 +260,116 @@
 					<li>Briefly define or explain all technical terms that may be unfamiliar to readers.</li>
 					<li>Explain all acronyms the first time they are used in your text—e.g., “Digital Signal Processing (DSP)”.</li>
 					<li>Explain local references (e.g., not everyone knows all city names in a particular country).</li>
-					<li>Explain “insider” comments. Ensure that your whole audience understands any reference whose meaning you do not describe (e.g., do not assume that everyone has used an Android phone, or a particular application).</li>
-					<li>Explain colloquial language and puns. Understanding phrases like “red herring” may require a local knowledge of English. Humor and irony are difficult to translate.</li>
 				</ul>
 			</div>
 		</div>
 
+		<!-- Separate long lists -->
 		<div class="content">
 			<div>
 				<ul>
-					<li>Use unambiguous forms for culturally localized concepts, such as times, dates, currencies, and numbers (e.g., “1-5- 97” or “5/1/97” may mean 5 January or 1 May, and “seven o’clock” may mean 7:00 am or 19:00). For currencies, indicate equivalences: “Participants were paid ₩22, or roughly US$29.”</li>
+					<li>Explain “insider” comments. Ensure that your whole audience understands any reference whose meaning you do not describe (e.g., do not assume that everyone has used an Android phone, or a particular application).</li>
+					<li>Explain colloquial language and puns. Understanding phrases like “red herring” may require a local knowledge of English. Humor and irony are difficult to translate.</li>
+					<li>Use unambiguous forms for culturally localized concepts, such as times, dates, currencies, and numbers (e.g., “1-5- 97” or “5/1/97” may mean 5 January or 1 May, and “seven o’clock” may mean 7:00 am or 19:00). For currencies, indicate equivalences: “Participants were paid ₩22, or roughly US$29.”</li>					
+				</ul>
+			</div>
+		</div>
+
+		<!-- Separate long lists -->
+		<div class="content">
+			<div>
+				<ul>
 					<li>Be careful with the use of gender-specific pronouns (he, she) and other gendered words (chairman, manpower, man-months). Use inclusive language that is gender-neutral (e.g., she or he, they, s/he, chair, staff, staff-hours, person-years). See the Guidelines for Bias-Free Writing for further advice and examples regarding gender and other personal attributes [9]. Be particularly aware of considerations around writing about people with disabilities. </li>
 					<li>If possible, use the full (extended) alphabetic character set for names of persons, institutions, and places (e.g., Grønbæk, Lafreniére, Sánchez, Nguyễn, Universität, Weißenbach, Züllighoven, Århus, etc.). These characters are already included in most versions and variants of Times, Helvetica, and Arial fonts.</li>
 				</ul>
 			</div>
+		</div>	
+
+		<div class="content">
+			<h2>ACCESSIBILITY</h2>
+			<div>		
+				The Executive Council of SIGCHI has committed to making SIGCHI conferences more inclusive for researchers, practitioners, and educators with disabilities. As a part of this goal, the all authors are asked to work on improving the accessibility of their submissions. Specifically, we encourage authors to carry out the following five steps:
+				<ol>
+					<li>Add alternative text to all figures</li>
+					<li>Mark table headings </li>
+					<li>Generate a tagged PDF</li>
+					<li>Verify the default language</li>
+					<li>Set the tab order to “Use Document Structure”</li>
+				</ol>
+				For more information and links to instructions and resources, please see: <a href="http://chi2016.acm.org/accessibility">http://chi2016.acm.org/accessibility</a>.
+			</div>
 		</div>
 
+		<div class="content">
+			<h2>PAGE NUMBERING, HEADERS, AND FOOTERS</h2>
+			<div>		
+				Your final submission should not contain footer or header information at the top or bottom of each page. Specifically, your final submission should not include page numbers. Initial submissions may include page numbers, but these must be removed for camera-ready. Page numbers will be added to the PDF when the proceedings are assembled.
+			</div>
+		</div>
 
+		<div class="content">
+			<h2>PRODUCING AND TESTING PDF FILES</h2>
+			<div>		
+				We recommend that you produce a PDF version of your submission well before the final deadline. Your PDF file must be ACM DL Compliant. The requirements for an ACM Compliant PDF are available at:
+				<br>
+				<a href="http://sheridanprinting.com/typedept/ACM-distilling-settings.htm">http://sheridanprinting.com/typedept/ACM-distilling-settings.htm</a>
+				<br>
+				When creating your PDF from Word, ensure that you generate a tagged PDF from improved accessibility. This can be done by using the Adobe PDF add-in, also called PDFMaker. Select Acrobat | Preferences from the ribbon and ensure that “Enable Accessibility and Reflow with tagged Adobe PDF” is selected. You can then generate a tagged PDF by selecting “Create PDF” from the Acrobat ribbon. Test your PDF file by viewing or printing it with the same software the publisher will use, Adobe Acrobat Reader Version 10, which is widely available at no cost. Note that most reviewers will use a North American/European version of Acrobat Reader, so please check your PDF accordingly.
+			</div>
+		</div>
 
+		<div class="content">
+			<h2>CONCLUSION</h2>
+			<div>		
+				It is important that you write for the SIGCHI audience. Please read previous years’ proceedings to understand the writing style and conventions that successful authors have used. State clearly what you have done, not merely what you plan to do, and explain how your work is different from previously published work, i.e., the unique contribution that your work makes to the field. Please consider what the reader will learn from your submission, and how they will find your work useful. If you write with these questions in mind, your work is more likely to be successful, both in being accepted into the conference, and in influencing the work of our field.
+			</div>
+		</div>
 
+		<div class="content">
+			<h2>ACKNOWLEDGMENTS</h2>
+			<div>		
+				Sample text: We thank all the volunteers, and all publications support and staff, who wrote and provided helpful comments on previous versions of this document. Authors 1, 2, and 3 gratefully acknowledge the grant from NSF (#1234-2012-ABC). This is just an example.
+			</div>
+		</div>
+
+		<div class="content">
+			<h2>REFERENCES FORMAT</h2>
+			<div>		
+				References must be the same font size as other body text. References should be in alphabetical order by last name of first author. Example reference formatting for individual journal articles [3], articles in conference proceedings [7], books [9], theses [10], book chapters [11], an entire journal issue [6], websites [1,4], tweets [1], patents [5], and online videos [8] is given here. This formatting is a slightly edited version of the format automatically generated by the ACM Digital Library (http://dl.acm.org) as “ACM Ref”. More details of reference formatting are available at:
+				<br>
+				<a href="http://www.acm.org/publications/submissions/latex_style">http://www.acm.org/publications/submissions/latex_style</a>
+				<br>
+				Note that the Hyperlink style used throughout this document uses blue links; however, URLs that appear in the references section may appear in black.
+			</div>
+		</div>
 	</div>
 
 	<!-- Template for first page of the document-->
 	<script type="text/html" id="fp-tpl">
-		<div class="page">
-			<h1><%= headline %></h1>
-			<div id="authors-wrapper"><table id="authors"></table></div>
+		<div class="page-wrapper">
+			<div class="page">
+				<h1><%= headline %></h1>
+				<div id="authors-wrapper"><table id="authors"></table></div>
 
-			<table id="page-<%= number %>">
-				<td id="column-left-<%= number %>" class="column"></td>
-				<td class="column-gap"></td>
-				<td id="column-right-<%= number %>" class="column"></td>
-			</table>
+				<table id="page-<%= number %>">
+					<td id="column-left-<%= number %>" class="column"></td>
+					<td class="column-gap"></td>
+					<td id="column-right-<%= number %>" class="column"></td>
+				</table>
+			</div>
 		</div>
 	</script>
 
 	<!-- Template for pages 2, 3, 4... of the document-->
 	<script type="text/html" id="other-pages-tpl">
-		<div class="page">
-			<table id="page-<%= number %>" class="column">
-				<td id="column-left-<%= number %>" class="column"></td>
-				<td class="column-gap"></td>
-				<td id="column-right-<%= number %>" class="column"></td>
-			</table>
+		<div class="page-wrapper">
+			<div class="page">
+				<table id="page-<%= number %>" class="column">
+					<td id="column-left-<%= number %>" class="column"></td>
+					<td class="column-gap"></td>
+					<td id="column-right-<%= number %>" class="column"></td>
+				</table>
+			</div>
 		</div>
 	</script>
 

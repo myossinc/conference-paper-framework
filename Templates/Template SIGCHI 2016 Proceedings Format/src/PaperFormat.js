@@ -6,6 +6,8 @@ PaperFormat = (function(){
 	heightFpContent = null,
 	heightHeadline = null,
 	heightAuthors = null,
+	widthPage = null,
+	widthColumn = null,
 	curPage = 1,
 	curSpaceLeft = null,
 	curSpaceRight = null,
@@ -18,6 +20,10 @@ PaperFormat = (function(){
 		setupMeasurements();
 		fillFirstPage();
 		fillContent();
+		numberFigures();
+		numberTables();
+		refactorLinks();
+		//colorPages();
 	},
 
 	getPaperType = function() {
@@ -37,8 +43,10 @@ PaperFormat = (function(){
 	setupMeasurements = function() {
 		switch(paperType) {
 			case "chi_proceedings":
-				heightPage = Math.floor(9.25 * dpi);
-				break;
+				heightPage	= Math.floor(9.25 * dpi);
+				widthPage	= Math.floor(7 * dpi);
+				widthColumn	= Math.floor(3.35 * dpi); 
+			break;
 		}
 	},
 
@@ -91,7 +99,7 @@ PaperFormat = (function(){
 		heightFpContent	= Math.floor(heightPage - heightAuthors - heightHeadline);
 		curSpaceLeft	= heightFpContent;
 		curSpaceRight	= heightFpContent;
-		$("#column-left-" + curPage).height("" + heightPage + "px");
+		$("#column-left-" + curPage).height("" + heightFpContent + "px");
 	},
 
 	fillAbstract = function() {
@@ -127,19 +135,35 @@ PaperFormat = (function(){
 		for(var i = 0; i < number; i++) {
 			var item = content[0];			
 			var itemHeight = $(item).height();
+			
+			// Append to both columns
+			if(item.children[0].classList.contains("fullsize")) {
+				createNewPage();
+				$("#column-left-" + curPage).append(item);
+				itemHeight		= (item.children[0]).offsetHeight;
+				$("#column-right-" + curPage).css("height", "" + (heightPage - itemHeight) + "px");
+				$("#column-right-" + curPage).css("top", "" + itemHeight + "px");
+				curSpaceLeft	-= itemHeight;
+				curSpaceRight	-= itemHeight;
+			}
 
-			if (itemHeight < curSpaceLeft && leftColNotFull) {
+			// Append to left column
+			else if ((itemHeight + 10) < curSpaceLeft && leftColNotFull) {
 				$("#column-left-" + curPage).append(item);
 				curSpaceLeft -= itemHeight;
-			}			
-			else if (itemHeight < curSpaceRight && rightColNotFull) {
+			}
+
+			// Append to right column
+			else if ((itemHeight + 10) < curSpaceRight && rightColNotFull) {
 				leftColNotFull = false;
 				$("#column-right-" + curPage).append(item);
 				curSpaceRight -= itemHeight;
 			}
+
 			else{
 				createNewPage();
 			}
+
 		}
 	},
 
@@ -156,6 +180,52 @@ PaperFormat = (function(){
 		});
 		var result = tpl(data);
 		$("#whole-page").append($.parseHTML(result));
+		console.log("created");
+	},
+
+	numberFigures = function() {
+		var figures = document.getElementsByTagName("figure");
+
+		for(var i = 0; i < figures.length; i++) {
+			var caption = figures[i].getElementsByTagName("figcaption")[0];
+			var text = caption.innerHTML;
+			var number = i+1;
+			caption.innerHTML = "Figure " + number + ". " + text;
+		}
+	}
+
+	numberTables = function() {
+		var tables = document.getElementsByClassName("table");
+
+		for(var i = 0; i < tables.length; i++) {
+			var caption = tables[i].getElementsByTagName("caption")[0];
+			var text = caption.innerHTML;
+			var number = i+1;
+			caption.innerHTML = "Table " + number + ". " + text;
+		}
+	},
+
+	refactorLinks = function() {
+		var links = document.getElementsByTagName("a");
+
+		for(var i = 0; i < links.length; i++) {
+			$(links[i]).attr('target', '_blank');
+		}
+	},
+
+	colorPages = function() {
+		for(var i = 1; i < curPage + 1; i++) {
+			$("#page-" + i).css("background-color", "" + getRandomColor());
+		}
+	},
+
+	getRandomColor = function() {
+		var letters = '0123456789ABCDEF'.split('');
+    	var color = '#';
+    	for (var i = 0; i < 6; i++ ) {
+       		color += letters[Math.floor(Math.random() * 16)];
+    	}
+    	return color;
 	};
 
 	that.init = init;
